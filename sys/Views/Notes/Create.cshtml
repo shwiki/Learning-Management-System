@@ -1,0 +1,251 @@
+﻿@model sys.Models.Notes
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_LayoutPageTeacher.cshtml";
+}
+<style>
+/* Main form container styling */
+.form-horizontal {
+  max-width: 900px;
+  margin: 0 auto 30px;
+  padding: 25px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 3px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Form headings */
+h2, h4 {
+  color: #40E0D0;
+  margin-bottom: 20px;
+  font-weight: 600;
+}
+
+h2 {
+  font-size: 28px;
+  text-align: center;
+}
+
+h4 {
+  font-size: 20px;
+  border-bottom: 2px solid #40E0D0;
+  padding-bottom: 10px;
+  margin-bottom: 25px;
+}
+
+/* Horizontal rule styling */
+hr {
+  border: 0;
+  height: 1px;
+  background-color: #e0e0e0;
+  margin: 20px 0;
+}
+
+/* Form group container */
+.form-group {
+  margin-bottom: 20px;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+/* Label styling */
+.control-label {
+  font-weight: 600;
+  color: #444;
+  padding-top: 8px;
+}
+
+/* Form controls */
+.form-control {
+  display: block;
+  width: 100%;
+  padding: 10px 12px;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #333;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  transition: all 0.3s ease;
+}
+
+.form-control:focus {
+  border-color: #40E0D0;
+  outline: 0;
+  box-shadow: 0 0 0 3px rgba(64, 224, 208, 0.25);
+}
+
+/* Specific styling for KeyContent and Description textboxes */
+[name="KeyContent"], [name="Description"] {
+  min-height: 240px;  /* Doubled from 120px to 240px */
+  white-space: pre-wrap;
+  line-height: 1.6;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  resize: vertical;
+}
+
+[name="KeyContent"] {
+  border-left: 3px solid #40E0D0;
+}
+
+[name="Description"] {
+  border-left: 3px solid #40E0D0;
+}
+
+/* File upload control */
+input[type="file"] {
+  display: block;
+  width: 100%;
+  padding: 10px 0;
+}
+
+/* Submit button styling */
+.btn-default {
+  background-color: #40E0D0;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.btn-default:hover {
+  background-color: #36b9aa;
+}
+
+/* Validation message styling */
+.text-danger {
+  color: #dc3545;
+  display: block;
+  margin-top: 5px;
+  font-size: 14px;
+}
+
+/* Back to list link */
+a {
+  color: #40E0D0;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s;
+}
+
+a:hover {
+  color: #36b9aa;
+  text-decoration: underline;
+}
+
+/* Responsive adjustments */
+@@media (min-width: 768px) {
+  .col-md-2 {
+    width: 16.66666667%;
+    float: left;
+  }
+
+  .col-md-10 {
+    width: 83.33333333%;
+    float: left;
+  }
+
+  .col-md-offset-2 {
+    margin-left: 16.66666667%;
+  }
+}
+
+@@media (max-width: 767px) {
+  .control-label {
+    text-align: left;
+    margin-bottom: 5px;
+  }
+
+  .form-group {
+    margin-bottom: 15px;
+  }
+
+  .col-md-10, .col-md-2 {
+    width: 100%;
+  }
+
+  .col-md-offset-2 {
+    margin-left: 0;
+  }
+}
+
+</style>
+
+<h2>Create</h2>
+
+@using (Html.BeginForm("Create", "Notes", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Notes</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.CourseCode, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.CourseCode, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.CourseCode, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Level, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Level, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Level, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Topic, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Topic, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Topic, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.KeyContent, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.KeyContent, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.KeyContent, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10" >
+                @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" } )
+            </div>
+        </div>
+
+        <!-- File upload control for the image -->
+        <div class="form-group">
+            <label class="control-label col-md-2" for="imageFile">Upload Image</label>
+            <div class="col-md-10">
+                <input type="file" name="imageFile" id="imageFile" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

@@ -1,0 +1,170 @@
+﻿@model sys.Models.RegisterViewModel
+@{
+    ViewBag.Title = "Register";
+}
+<style>
+/* Registration Form Styles */
+main[aria-labelledby="title"] {
+  max-width: 700px;
+  margin: 40px auto;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  background: #ffffff;
+}
+
+#title {
+  color: #1a73e8;
+  font-size: 28px;
+  font-weight: 600;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+h4 {
+  color: #202124;
+  font-size: 18px;
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+
+hr {
+  border: none;
+  height: 1px;
+  background: #e0e0e0;
+  margin: 20px 0;
+}
+
+.text-danger {
+  color: #d93025;
+  font-size: 14px;
+  margin-bottom: 16px;
+  display: block;
+}
+
+.row {
+  margin-bottom: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.col-form-label {
+  font-weight: 500;
+  color: #5f6368;
+  padding-bottom: 8px;
+}
+
+.form-control {
+  width: 100%;
+  padding: 12px 14px;
+  font-size: 16px;
+  border: 1px solid #dadce0;
+  border-radius: 4px;
+  transition: border 0.2s, box-shadow 0.2s;
+}
+
+.form-control:focus {
+  border-color: #1a73e8;
+  box-shadow: 0 0 0 2px rgba(26, 115, 232, 0.2);
+  outline: none;
+}
+
+.form-control[type="password"] {
+  letter-spacing: 0.1em;
+}
+
+.btn {
+  padding: 10px 24px;
+  font-size: 16px;
+  font-weight: 500;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-outline-dark {
+  background-color: #1a73e8;
+  color: white;
+  border: none;
+}
+
+.btn-outline-dark:hover {
+  background-color: #0d62d1;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 6px rgba(26, 115, 232, 0.3);
+}
+
+/* Responsive adjustments */
+@@media (max-width: 768px) {
+  .row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .col-md-2, .col-md-10 {
+    width: 100%;
+  }
+
+  .offset-md-2 {
+    margin-left: 0;
+  }
+}
+
+/* Optional animation for form elements */
+@@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.row {
+  animation: fadeIn 0.3s ease-out forwards;
+  animation-delay: calc(var(--index, 0) * 0.1s);
+}
+
+.row:nth-child(1) { --index: 1; }
+.row:nth-child(2) { --index: 2; }
+.row:nth-child(3) { --index: 3; }
+.row:nth-child(4) { --index: 4; }
+
+</style>
+
+<main aria-labelledby="title">
+
+    <h2 id="title">@ViewBag.Title.</h2>
+
+    @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { role = "form" }))
+    {
+        @Html.AntiForgeryToken()
+        <h4>Create a new account.</h4>
+        <hr />
+        @Html.ValidationSummary("", new { @class = "text-danger" })
+        <div class="row">
+            @Html.LabelFor(m => m.Email, new { @class = "col-md-2 col-form-label" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="row">
+            @Html.LabelFor(m => m.Password, new { @class = "col-md-2 col-form-label" })
+            <div class="col-md-10">
+                @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="row">
+            @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-2 col-form-label" })
+            <div class="col-md-10">
+                @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="row">
+            <div class="offset-md-2 col-md-10">
+                <input type="submit" value="Register" class="btn btn-outline-dark" />
+            </div>
+        </div>
+    }
+</main>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

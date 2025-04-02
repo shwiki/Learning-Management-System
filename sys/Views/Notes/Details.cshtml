@@ -1,0 +1,134 @@
+﻿@model sys.Models.Notes
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_LayoutPageTeacher.cshtml";
+}
+<style>
+    /* Main container styling */
+    .dl-horizontal {
+        margin: 20px 0;
+    }
+
+        /* Term and description styling */
+        .dl-horizontal dt {
+            float: left;
+            width: 160px;
+            overflow: hidden;
+            clear: left;
+            text-align: right;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .dl-horizontal dd {
+            margin-left: 180px;
+            margin-bottom: 10px;
+        }
+
+            /* KeyContent specific styling */
+            .dl-horizontal dd[data-for="KeyContent"] {
+                white-space: pre-line; /* This preserves line breaks in the text */
+                color: #40E0D0; /* Turquoise blue color */
+            }
+
+            /* Description specific styling */
+            .dl-horizontal dd[data-for="Description"] {
+                white-space: pre-line; /* This preserves line breaks in the text */
+            }
+
+            /* Image styling */
+            .dl-horizontal dd img {
+                max-width: 300px;
+                border: 1px solid #ddd;
+                border-radius: 4px;
+                padding: 5px;
+            }
+
+    /* Link styling */
+    p a {
+        color: #40E0D0; /* Turquoise blue color */
+        text-decoration: none;
+        margin-right: 10px;
+    }
+
+        p a:hover {
+            text-decoration: underline;
+        }
+
+    /* Header styling */
+    h2, h4 {
+        color: #333;
+    }
+
+    hr {
+        border: 0;
+        height: 1px;
+        background-image: linear-gradient(to right, rgba(0,0,0,0), rgba(0,0,0,0.75), rgba(0,0,0,0));
+        margin: 20px 0;
+    }
+
+</style>
+
+<h2>Details</h2>
+
+<div>
+    <h4>Notes</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.CourseCode)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CourseCode)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Level)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Level)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Topic)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Topic)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.KeyContent)
+        </dt>
+
+        <dd data-for="KeyContent">
+            @Html.DisplayFor(model => model.KeyContent)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+
+        <dd data-for="Description">
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Image)
+        </dt>
+
+        <dd>
+            <img src="@Url.Content(Model.Image)" alt="Teacher Image" style="max-width:300px;" />
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

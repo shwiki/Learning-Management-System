@@ -1,0 +1,187 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<main>
+    <section class="row" aria-labelledby="aspnetTitle">
+        <h1 id="title">Higher Grades</h1>
+        <p class="lead">High Grades is a learning management system accomodating teachers, learners and parents all in one place.</p>
+        <p><a class="btn btn-primary btn-md"  @Html.ActionLink("Learn more", "About", "Home", new { area = "" }, new { @class = "nav-link" })</a></p>
+       
+    </section>
+
+    <div class="row">
+        <section class="col-md-4" aria-labelledby="gettingStartedTitle">
+            <h2 id="gettingStartedTitle">Student</h2>
+            <p>
+                Welcome, Student! Access your personalized dashboard where you can view your courses,
+                submit assignments, and collaborate with your peers. Begin your academic journey with
+                our tailored resources designed just for you.
+            </p>
+            <p><a class="btn btn-outline-dark" @Html.ActionLink("Learn more", "Login", "Account", routeValues: null, htmlAttributes: new { id = "registerLink", @class="nav-link" })&raquo;</a></p>
+        </section>
+        <section class="col-md-4" aria-labelledby="librariesTitle">
+            <h2 id="librariesTitle">Teacher</h2>
+            <p>
+                Welcome, Teacher! Manage your classes effortlessly using our powerful lesson planning tools, grading system, and
+                communication features. Join our community of innovative educators and inspire the next generation.
+            </p>
+            <p><a class="btn btn-outline-dark" @Html.ActionLink("Learn more", "Login", "Account", routeValues: null, htmlAttributes: new { id = "registerLink", @class = "nav-link" })&raquo;</a></p>
+        </section>
+        <section class="col-md-4" aria-labelledby="hostingTitle">
+            <h2 id="hostingTitle">Parent</h2>
+            <p>Welcome, Parent! Stay connected with your child's academic progress and receive timely updates. Explore our platform
+            to review assignments, communicate with teachers, and support your child's learning journey.</p>
+            <p><a class="btn btn-outline-dark" @Html.ActionLink("Learn more", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink", @class = "nav-link" }) &raquo;</a></p>
+        </section>
+    </div>
+</main>
+
+<style>
+ /* Home Page CSS with Turquoise Theme */
+
+main {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+/* Hero Section */
+main section[aria-labelledby="aspnetTitle"] {
+  text-align: center;
+  padding: 3rem 1.5rem;
+  margin-bottom: 3rem;
+  background: linear-gradient(to right, rgba(255,255,255,0.9), rgba(0,192,192,0.1));
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  border-left: 5px solid #00c0c0;
+}
+
+#title {
+  font-size: 3rem;
+  font-weight: 700;
+  color: #00a0a0;
+  margin-bottom: 1rem;
+}
+
+.lead {
+  font-size: 1.25rem;
+  color: #445;
+  max-width: 800px;
+  margin: 0 auto 1.5rem;
+  line-height: 1.6;
+}
+
+.btn-primary {
+  background-color: #00c0c0 !important;
+  border-color: #00c0c0 !important;
+  color: white !important;
+  padding: 0.6rem 1.5rem;
+  font-weight: 500;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.btn-primary:hover {
+  background-color: #00a0a0 !important;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 192, 192, 0.2);
+}
+
+/* User Cards */
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 -15px;
+}
+
+.col-md-4 {
+  flex: 0 0 33.333333%;
+  max-width: 33.333333%;
+  padding: 0 15px;
+  margin-bottom: 30px;
+}
+
+main .row section {
+  height: 100%;
+  background-color: white;
+  border-radius: 10px;
+  padding: 2rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  border-top: 4px solid transparent;
+}
+
+main .row section:hover {
+  border-top-color: #00c0c0;
+  transform: translateY(-5px);
+  box-shadow: 0 12px 20px rgba(0, 192, 192, 0.15);
+}
+
+main .row section h2 {
+  color: #00a0a0;
+  font-size: 1.75rem;
+  margin-bottom: 1rem;
+  position: relative;
+  padding-bottom: 0.75rem;
+}
+
+main .row section h2::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 50px;
+  height: 3px;
+  background-color: #00c0c0;
+}
+
+main .row section p {
+  color: #555;
+  margin-bottom: 1.5rem;
+  line-height: 1.6;
+}
+
+.btn-outline-dark {
+  color: #444 !important;
+  border: 2px solid #ddd !important;
+  background: transparent !important;
+  padding: 0.5rem 1.25rem;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.btn-outline-dark:hover {
+  color: #00a0a0 !important;
+  border-color: #00c0c0 !important;
+  background-color: rgba(0, 192, 192, 0.05) !important;
+}
+
+/* Responsive Adjustments */
+@@media (max-width: 992px) {
+  .col-md-4 {
+    flex: 0 0 50%;
+    max-width: 50%;
+  }
+}
+
+@@media (max-width: 768px) {
+  .col-md-4 {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+
+  #title {
+    font-size: 2.5rem;
+  }
+
+  main .row section {
+    margin-bottom: 1.5rem;
+  }
+}
+
+</style>

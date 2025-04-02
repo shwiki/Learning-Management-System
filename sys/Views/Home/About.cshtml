@@ -1,0 +1,254 @@
+﻿@{
+    ViewBag.Title = "Services";
+}
+<title>@ViewBag.Title</title>
+<style>
+ 
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  line-height: 1.6;
+  color: #333;
+  background-color: #f8f9fa;
+  margin: 0;
+  padding: 0;
+}
+
+header {
+  background: linear-gradient(135deg, #00c0c0 0%, #008080 100%) !important;
+  color: white !important;
+  padding: 2rem 0 !important;
+  margin-bottom: 2rem !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border-bottom: none !important;
+}
+
+header h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin: 0;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.container {
+  max-width: 1200px;
+  padding: 0 15px;
+  margin: 0 auto;
+}
+
+section {
+  padding: 2rem 0;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.07);
+  margin-bottom: 2.5rem !important;
+  padding: 2rem;
+}
+
+h2 {
+  color: #00a0a0;
+  font-size: 2rem;
+  position: relative;
+  padding-bottom: 0.5rem;
+  margin-bottom: 2rem !important;
+  text-align: center;
+}
+
+h2:after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  transform: translateX(-50%);
+  width: 100px;
+  height: 3px;
+  background-color: #00c0c0;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  margin-right: -15px;
+  margin-left: -15px;
+  justify-content: center;
+}
+
+.col-md-4 {
+  flex: 0 0 33.333333%;
+  max-width: 33.333333%;
+  padding: 0 15px;
+  margin-bottom: 30px;
+}
+
+.service-card {
+  background-color: white;
+  border-radius: 10px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  border: 1px solid #eaeaea;
+}
+
+.service-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 20px rgba(0, 192, 192, 0.15);
+  border-color: #00c0c0;
+}
+
+.service-card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-bottom: 3px solid #00c0c0;
+}
+
+.service-card h3 {
+  color: #00a0a0;
+  padding: 1rem 1.5rem 0.5rem;
+  margin: 0;
+  font-size: 1.4rem;
+}
+
+.service-card p {
+  padding: 0 1.5rem 1.5rem;
+  margin: 0;
+  color: #666;
+  flex-grow: 1;
+}
+
+/* Responsive adjustments */
+@@media (max-width: 992px) {
+  .col-md-4 {
+    flex: 0 0 50%;
+    max-width: 50%;
+  }
+}
+
+@@media (max-width: 768px) {
+  .col-md-4 {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+
+  header h1 {
+    font-size: 2rem;
+  }
+
+  h2 {
+    font-size: 1.75rem;
+  }
+}
+
+/* Animation for cards */
+@@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.service-card {
+  animation: fadeIn 0.5s ease forwards;
+  animation-delay: calc(var(--card-index, 0) * 0.1s);
+}
+
+.service-card:nth-child(1) { --card-index: 1; }
+.service-card:nth-child(2) { --card-index: 2; }
+.service-card:nth-child(3) { --card-index: 3; }
+.service-card:nth-child(4) { --card-index: 4; }
+
+</style>
+<body>
+    <header class="bg-white border-bottom py-3 mb-4 text-center">
+        <h1>Our Services</h1>
+    </header>
+
+    <main class="container">
+        <!-- =======================================
+             STUDENT SERVICES
+        ======================================== -->
+        <section class="mb-5">
+            <h2 class="mb-4">Services for Students</h2>
+            <div class="row">
+                <!-- 3 in one row -->
+                <div class="col-md-4">
+                    <div class="service-card">
+                        <img src="~/images/chatb.jpeg" alt="AI Chatbot"/>
+                        <h3>AI Chatbot</h3>
+                        <p>Interact with our advanced AI chatbot to get quick answers, study suggestions, and personalized learning guidance.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="service-card">
+                        <img src="~/Images/teacher c.png" alt="Teacher Content" />
+                        <h3>Teacher Content</h3>
+                        <p>Access curated lessons, reading materials, and additional resources uploaded by teachers to enrich your knowledge.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="service-card">
+                        <img src="~/images/logo.png" alt="Quizzes & Assignments" />
+                        <h3>Quizzes & Assignments</h3>
+                        <p>Challenge yourself with quizzes and manage your assignments. Get immediate feedback to improve continuously.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+      
+        <section class="mb-5">
+            <h2 class="mb-4">Services for Teachers</h2>
+            <!-- First row: 3 columns -->
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="service-card">
+                        <img src="~/Images/chatb.jpeg" alt="Lesson Planning Chatbot" />
+                        <h3>Lesson Planning Chatbot</h3>
+                        <p>Generate ideas and outlines for lesson plans using our AI-powered chatbot, saving time for interactive teaching.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="service-card">
+                        <img src="~/Images/quiz.jpeg" alt="Manual Quizzes & Assignments" />
+                        <h3>Manual Quizzes & Assignments</h3>
+                        <p>Create and customize quizzes, assignments, and tasks. Monitor submissions in real time from your dashboard.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="service-card">
+                        <img src="~/images/insights.jpeg" alt="Student Performance Insights" />
+                        <h3>Student Performance Insights</h3>
+                        <p>Analyze students’ progress with easy-to-read data. Identify areas for improvement and tailor your teaching approach.</p>
+                    </div>
+                </div>
+            
+
+        <section>
+            <h2 class="mb-4">Services for Parents</h2>
+            <div class="row">
+               
+                <div class="col-md-4">
+                    <div class="service-card">
+                        <img src="~/Images/chidres.jpeg" alt="Child Work Insights" />
+                        <h3>Child Work Insights</h3>
+                        <p>Keep track of your child’s homework, upcoming assignments, and projects to stay involved in their learning journey.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="service-card">
+                        <img src="~/images/wese.jpeg" alt="Child’s Results" />
+                        <h3>Child’s Results</h3>
+                        <p>View performance reports, grades, and progress over time—helping you celebrate successes and address challenges.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="service-card">
+                        <img src="~/Images/gehera.jpeg" alt="Class Information" />
+                        <h3>Class Information</h3>
+                        <p>See details about other students in the same class, upcoming events, and direct updates from teachers.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+</body>

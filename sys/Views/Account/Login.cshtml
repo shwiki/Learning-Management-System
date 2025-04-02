@@ -1,0 +1,259 @@
+﻿@using sys.Models
+@model LoginViewModel
+@{
+    ViewBag.Title = "Log in";
+}
+
+<style>
+    /* Enhanced styling for ASP.NET MVC login page with improved text box alignment */
+    #loginForm {
+        background: white;
+        border-radius: 16px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        padding: 2.5rem;
+        max-width: 500px;
+        margin: 3rem auto;
+        border-top: 4px solid #1EAEDB;
+        animation: fadeIn 0.5s ease-out;
+    }
+
+    @@keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    #title {
+        font-size: 2rem;
+        font-weight: 800;
+        margin-bottom: 1.5rem;
+        text-align: center;
+        background: linear-gradient(to right, #1EAEDB, #33C3F0);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        letter-spacing: -0.5px;
+    }
+
+    /* Improved form layout and alignment */
+    .form-group {
+        margin-bottom: 1.5rem;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+    }
+
+    /* For Bootstrap's horizontal form layout */
+    .form-horizontal .form-group {
+        display: block;
+        margin-left: 0;
+        margin-right: 0;
+    }
+
+    .form-horizontal .control-label {
+        text-align: left !important;
+        padding-top: 0 !important;
+        padding-bottom: 8px !important;
+    }
+
+    .form-horizontal .col-md-10,
+    .form-horizontal .col-md-2,
+    .form-horizontal .col-sm-10,
+    .form-horizontal .col-sm-2 {
+        width: 100% !important;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+        float: none !important;
+    }
+
+    .form-horizontal .col-md-offset-2,
+    .form-horizontal .col-sm-offset-2 {
+        margin-left: 0 !important;
+    }
+
+    .control-label {
+        font-weight: 600;
+        color: #4b5563;
+        margin-bottom: 0.5rem;
+        display: block;
+        font-size: 0.95rem;
+        letter-spacing: 0.025em;
+        width: 100%;
+    }
+
+    .form-control {
+        border-radius: 10px;
+        padding: 0.85rem 1rem;
+        border: 2px solid #e2e8f0;
+        font-size: 1.05rem;
+        transition: all 0.3s ease;
+        background-color: #f8fafc;
+        width: 100%;
+        box-sizing: border-box;
+        display: block;
+        margin-top: 0;
+    }
+
+        .form-control:focus {
+            border-color: #1EAEDB;
+            box-shadow: 0 0 0 3px rgba(30, 174, 219, 0.25);
+            background-color: white;
+        }
+
+    /* Fix for checkbox alignment */
+    .checkbox {
+        display: flex;
+        align-items: center;
+        margin-top: 1rem;
+    }
+
+        .checkbox input[type="checkbox"] {
+            margin-right: 10px;
+            width: 18px;
+            height: 18px;
+            accent-color: #1EAEDB;
+            flex-shrink: 0;
+        }
+
+        .checkbox label {
+            margin-bottom: 0;
+            font-weight: normal;
+        }
+
+    /* Button styling */
+    .btn-outline-dark {
+        background: linear-gradient(to right, #1EAEDB, #33C3F0);
+        color: white;
+        border: none;
+        padding: 0.85rem 2rem;
+        border-radius: 10px;
+        font-weight: 700;
+        font-size: 1.05rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(30, 174, 219, 0.3);
+        display: block;
+        width: 100%;
+        margin-top: 1.5rem;
+    }
+
+        .btn-outline-dark:hover, .btn-outline-dark:focus {
+            background: linear-gradient(to right, #0FA0CE, #1EAEDB);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(15, 160, 206, 0.4);
+        }
+
+    /* Force normal Bootstrap layouts to behave */
+    .container, .container-fluid {
+        max-width: 100%;
+    }
+
+    .row {
+        margin-left: 0;
+        margin-right: 0;
+        display: block;
+    }
+
+    /* Error messages */
+    .text-danger, .field-validation-error {
+        color: #ef4444;
+        font-size: 0.875rem;
+        margin-top: 0.4rem;
+        font-weight: 500;
+        display: block;
+    }
+
+    /* Password field container for toggle button */
+    .password-field-container {
+        position: relative;
+        width: 100%;
+    }
+
+    .password-toggle {
+        position: absolute;
+        right: 12px;
+        top: 50%;
+        transform: translateY(-50%);
+        background: none;
+        border: none;
+        color: #1EAEDB;
+        cursor: pointer;
+        z-index: 5;
+    }
+
+    /* Responsive layout */
+    @@media (max-width: 768px) {
+        #loginForm {
+            padding: 1.5rem;
+            margin: 1rem;
+        }
+    }
+
+    /* Fix for potential Bootstrap 3 specific issues */
+    @@media (min-width: 768px) {
+        .form-horizontal .control-label {
+            padding-top: 0;
+            margin-bottom: 8px;
+            text-align: left;
+        }
+    }
+</style>
+<main aria-labelledby="title">
+    <div class="row">
+        <div class="col-md-8">
+            <section id="loginForm">
+                @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { role = "form" }))
+                {
+                    @Html.AntiForgeryToken()
+                    <h2 id="title">@ViewBag.Title.</h2>
+                    <hr />
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div class="form-group row">
+                        @Html.LabelFor(m => m.Email, new { @class = "col-md-2 col-form-label" })
+                        <div class="col-md-9">
+                            @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        @Html.LabelFor(m => m.Password, new { @class = "col-md-2 col-form-label" })
+                        <div class="col-md-9">
+                            @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="offset-md-2 col-md-10">
+                            <div class="checkbox">
+                                @Html.CheckBoxFor(m => m.RememberMe)
+                                @Html.LabelFor(m => m.RememberMe)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="offset-md-2 col-md-10">
+                            <input type="submit" value="Log in" class="btn btn-outline-dark" />
+                        </div>
+                    </div>
+                    <p>
+                        Don't have an account? @Html.ActionLink(" Register", "Register")
+                    </p>
+                    @* Enable this once you have account confirmation enabled for password reset functionality
+                        <p>
+                            @Html.ActionLink("Forgot your password?", "ForgotPassword")
+                        </p>*@
+                }
+            </section>
+        </div>
+    </div>
+</main>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
