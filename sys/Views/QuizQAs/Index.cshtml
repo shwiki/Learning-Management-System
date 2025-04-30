@@ -1,0 +1,118 @@
+﻿@model IEnumerable<sys.Models.Quiz.QuizQA>
+
+@{
+    Layout = "~/Views/Shared/_LayoutPageTeacher.cshtml";
+}
+
+<!-- Inline CSS for turquoise theme and template table styling -->
+<style>
+    :root {
+        --bs-primary: #40E0D0;
+    }
+
+    /* Container */
+    .custom-block {
+        background: #fff;
+        border-radius: .5rem;
+        padding: 1rem;
+        box-shadow: 0 .125rem .25rem rgba(0,0,0,.075);
+        margin-bottom: 0;
+    }
+
+    /* Page heading & button */
+    h3.mt-0 {
+        margin-top: 0;
+        color: var(--bs-primary);
+    }
+
+    .btn-create {
+        margin-bottom: 1rem;
+    }
+
+    /* Table */
+    .account-table {
+        width: 100%;
+        table-layout: auto;
+        font-size: .875rem;
+    }
+
+        .account-table th {
+            background-color: var(--bs-primary);
+            color: #fff;
+            padding: .75rem;
+        }
+
+        .account-table td {
+            padding: .75rem;
+            vertical-align: middle;
+            word-wrap: break-word;
+        }
+
+    .table-responsive {
+        overflow-x: auto;
+    }
+
+    /* Buttons */
+    .btn-info {
+        background-color: var(--bs-primary);
+        border-color: var(--bs-primary);
+    }
+
+    .btn-outline-primary {
+        color: var(--bs-primary);
+        border-color: var(--bs-primary);
+    }
+</style>
+
+<!-- Header -->
+<h3 class="mt-0">Quiz Questions</h3>
+<p>
+    @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-sm btn-primary btn-create" })
+</p>
+
+<!-- Table block -->
+<div class="custom-block">
+    <div class="table-responsive">
+        <table class="account-table table">
+            <thead>
+                <tr>
+                    <th scope="col">Quiz Title</th>
+                    <th scope="col">Topic</th>
+                    <th scope="col">Question</th>
+                    <th scope="col">Option A</th>
+                    <th scope="col">Option B</th>
+                    <th scope="col">Option C</th>
+                    <th scope="col">Option D</th>
+                    <th scope="col">Answer</th>
+                    <th scope="col">Marks</th>
+                    <th scope="col">Difficulty</th>
+                    <th scope="col">Explanation</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.Quiz.QuizTitle</td>
+                        <td>@item.Topic</td>
+                        <td>@item.QuestionText</td>
+                        <td>@item.OptionA</td>
+                        <td>@item.OptionB</td>
+                        <td>@item.OptionC</td>
+                        <td>@item.OptionD</td>
+                        <td>@item.Answer</td>
+                        <td>@item.Marks</td>
+                        <td>@item.Difficulty</td>
+                        <td>@item.Explanation</td>
+                        <td>
+                            <a class="btn btn-sm btn-outline-primary" href="@Url.Action("Edit", new { id = item.Id })">Edit</a>
+                            <a class="btn btn-sm btn-info" href="@Url.Action("Details", new { id = item.Id })">Details</a>
+                            <a class="btn btn-sm btn-danger" href="@Url.Action("Delete", new { id = item.Id })">Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -1,7 +1,7 @@
 ﻿@model sys.Models.Notes
 
 @{
-    ViewBag.Title = "Details";
+    
     Layout = "~/Views/Shared/_LayoutPageTeacher.cshtml";
 }
 <style>
@@ -72,26 +72,26 @@
 
 </style>
 
-<h2>Details</h2>
+<h3>Notes/Details</h3>
 
 <div>
     <h4>Notes</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.CourseCode)
+            @Html.DisplayNameFor(model => model.Subject)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.CourseCode)
+            @Html.DisplayFor(model => model.Subject)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Level)
+            @Html.DisplayNameFor(model => model.ClassName)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Level)
+            @Html.DisplayFor(model => model.ClassName)
         </dd>
 
         <dt>

@@ -1,0 +1,41 @@
+﻿@model sys.Models.Student.TakeQuestionView
+@{
+    ViewBag.Title = "TakeQuestionView";
+    Layout = "~/Views/Shared/_LayoutPageStudent.cshtml";
+}
+
+<h2>TakeQuestionView</h2>
+
+
+
+<h2>Question @((Model.QuestionIndex+1))</h2>
+<p>@Model.QuestionText</p>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(m => m.AttemptId)
+    @Html.HiddenFor(m => m.QuestionId)
+    @Html.HiddenFor(m => m.QuestionIndex)
+    @Html.HiddenFor(m => m.IsLast)
+
+    <div>
+        @Html.RadioButtonFor(m => m.SelectedOption, "A") <strong>A.</strong> @Model.OptionA<br />
+        @Html.RadioButtonFor(m => m.SelectedOption, "B") <strong>B.</strong> @Model.OptionB<br />
+        @Html.RadioButtonFor(m => m.SelectedOption, "C") <strong>C.</strong> @Model.OptionC<br />
+        @Html.RadioButtonFor(m => m.SelectedOption, "D") <strong>D.</strong> @Model.OptionD<br />
+        @Html.ValidationMessageFor(m => m.SelectedOption)
+    </div>
+
+    <div class="btn-group">
+        <button type="submit" name="nav" value="Back" class="btn btn-default" @(Model.IsFirst ? "disabled" : "")>Back</button>
+        @if (!Model.IsLast)
+            {
+            <button type = "submit" name = "nav" value = "Next"  class="btn btn-primary">Next</button>
+            }
+        else
+            {
+            <button type = "submit" name="nav" value="Review" class="btn btn-warning">Review Answers</button>
+            }
+    </div >
+}

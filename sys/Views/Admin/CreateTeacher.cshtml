@@ -1,0 +1,69 @@
+﻿@model sys.Models.CreateTeacherViewModel
+
+@{
+    
+}
+
+<h2>Create Teacher</h2>
+
+@using (Html.BeginForm(
+        actionName: "CreateTeacher",
+        controllerName: "Admin",
+        method: FormMethod.Post,
+        htmlAttributes: new
+        {
+            @class = "form-horizontal",
+            role = "form",
+            enctype = "multipart/form-data"    // ← needed for file uploads
+        }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
+        <div class="col-md-8">
+            @Html.TextBoxFor(m => m.Email,
+                new { @class = "form-control", placeholder = "teacher@example.com" })
+            @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.ContactNumber, new { @class = "col-md-2 control-label" })
+        <div class="col-md-4">
+            @Html.TextBoxFor(m => m.ContactNumber,
+                new { @class = "form-control", placeholder = "+263771234567" })
+            @Html.ValidationMessageFor(m => m.ContactNumber, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.ClassName, new { @class = "col-md-2 control-label" })
+        <div class="col-md-4">
+            @Html.EnumDropDownListFor(m => m.ClassName,
+                new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.ClassName, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.PhotoPath, "Profile Photo", htmlAttributes: new { @class = "col-md-2 control-label" })
+        <div class="col-md-4">
+            <input type="file" name="PhotoUpload" class="form-control" />
+            @Html.ValidationMessageFor(m => m.PhotoPath, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-8">
+            <button type="submit" class="btn btn-primary">Create Teacher</button>
+            @Html.ActionLink("Cancel", "Index", "Admin",
+                null, new { @class = "btn btn-default" })
+        </div>
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

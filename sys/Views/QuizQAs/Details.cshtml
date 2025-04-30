@@ -1,0 +1,107 @@
+﻿@model sys.Models.Quiz.QuizQA
+
+@{
+    
+    Layout = "~/Views/Shared/_LayoutPageTeacher.cshtml";
+}
+
+<h3>Quiz Question/Details</h3>
+
+<div>
+    <h4>QuizQA</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Quiz.QuizTitle)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Quiz.QuizTitle)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Topic)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Topic)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.QuestionText)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.QuestionText)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.OptionA)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.OptionA)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.OptionB)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.OptionB)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.OptionC)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.OptionC)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.OptionD)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.OptionD)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Answer)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Answer)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Marks)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Marks)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Difficulty)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Difficulty)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Explanation)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Explanation)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

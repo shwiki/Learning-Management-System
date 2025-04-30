@@ -1,0 +1,129 @@
+﻿@model IEnumerable<sys.Models.Assignment.CreateAssignment>
+@{
+    Layout = "~/Views/Shared/_LayoutPageTeacher.cshtml";
+    ViewBag.Title = "Assignments";
+
+    // Pagination
+    var pageQuery = Request.QueryString["page"];
+    int page = 1;
+    if (!string.IsNullOrEmpty(pageQuery) && int.TryParse(pageQuery, out var p)) { page = p; }
+    int pageSize = 4;
+
+    // Order descending by Id
+    var assignments = Model.OrderByDescending(a => a.Id).ToList();
+    var pagedAssignments = assignments.Skip((page - 1) * pageSize).Take(pageSize);
+}
+
+<style>
+    :root {
+        --bs-primary: #40E0D0;
+    }
+
+    .custom-block {
+        background: #fff;
+        border-radius: .5rem;
+        padding: 1rem;
+        box-shadow: 0 .125rem .25rem rgba(0,0,0,.075);
+        margin-bottom: 0;
+    }
+
+    h3.mt-0 {
+        margin-top: 0;
+        color: var(--bs-primary);
+        font-size: 1.5rem;
+    }
+
+    .account-table {
+        width: 100%;
+        table-layout: auto;
+        font-size: .875rem;
+    }
+
+        .account-table th {
+            background-color: var(--bs-primary);
+            color: #fff;
+            padding: .75rem;
+        }
+
+        .account-table td {
+            padding: .75rem;
+            vertical-align: middle;
+            word-wrap: break-word;
+        }
+
+    .table-responsive {
+        overflow-x: auto;
+    }
+
+    .btn-info {
+        background-color: var(--bs-primary);
+        border-color: var(--bs-primary);
+        font-size: .8rem;
+        padding: .25rem .5rem;
+    }
+
+    .btn-outline-secondary {
+        font-size: .8rem;
+        padding: .25rem .5rem;
+    }
+</style>
+
+<h3 class="mt-0">Assignments</h3>
+<p>
+    <a class="btn btn-sm btn-info" href="@Url.Action("Create")">Create New</a>
+</p>
+
+@if (!assignments.Any())
+{
+    <div class="alert alert-info">No assignments found.</div>
+}
+else
+{
+    <div class="custom-block">
+        <div class="table-responsive">
+            <table class="account-table table">
+                <thead>
+                    <tr>
+                        <th scope="col">Subject</th>
+                        <th scope="col">Start Date</th>
+                        <th scope="col">End Date</th>
+                        <th scope="col">Document</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in pagedAssignments)
+                    {
+                        <tr>
+                            <td>@item.Subject</td>
+                            <td>@item.StartDate.ToString("MMM d, yyyy")</td>
+                            <td>@item.EndDate.ToString("MMM d, yyyy")</td>
+                            <td>
+                                @if (!string.IsNullOrEmpty(item.FilePath))
+                                {
+                                    <a href="@item.FilePath" target="_blank">Download</a>
+                                }
+                            </td>
+                            <td>
+                                <a class="btn btn-sm btn-outline-secondary" href="@Url.Action("Edit", new { id = item.Id })">Edit</a>
+                                <a class="btn btn-sm btn-outline-secondary" href="@Url.Action("Details", new { id = item.Id })">Details</a>
+                                <a class="btn btn-sm btn-outline-danger" href="@Url.Action("Delete", new { id = item.Id })">Delete</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        <div class="d-flex justify-content-between">
+            @if (page > 1)
+            {
+                <a class="btn btn-sm btn-outline-secondary" href="@Url.Action("Index", new { page = page - 1 })">Previous</a>
+            }
+            @if (assignments.Count > page * pageSize)
+            {
+                <a class="btn btn-sm btn-outline-secondary" href="@Url.Action("Index", new { page = page + 1 })">Next</a>
+            }
+        </div>
+    </div>
+}

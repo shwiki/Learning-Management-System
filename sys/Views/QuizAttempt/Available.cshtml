@@ -1,0 +1,44 @@
+﻿@model IEnumerable<sys.Models.Quiz.CreateQ>
+
+@{
+    ViewBag.Title = "Available Quizzes";
+    Layout = "~/Views/Shared/_LayoutPageStudent.cshtml";
+}
+
+<h2>Available Quizzes</h2>
+
+@if (!Model.Any())
+{
+    <p class="text-muted">There are no quizzes available right now.</p>
+}
+else
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>@Html.DisplayNameFor(m => m.QuizTitle)</th>
+                <th>@Html.DisplayNameFor(m => m.Subject)</th>
+                <th>Starts</th>
+                <th>Ends</th>
+                <th></th>
+            </tr>
+        </thead
+. >
+        <tbody>
+            @foreach (var quiz in Model)
+            {
+                <tr>
+                    <td>@quiz.QuizTitle</td>
+                    <td>@quiz.Subject</td>
+                    <td>@quiz.StartDate.ToString("g")</td>
+                    <td>@quiz.EndDate.ToString("g")</td>
+                    <td>
+                        @* Link into your Start‑attempt action *@
+                        @Html.ActionLink("Start Quiz", "Confirm", "QuizAttempt", new { quizId = quiz.Id }, new { @class = "btn btn-primary" })
+
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

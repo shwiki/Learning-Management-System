@@ -1,0 +1,80 @@
+﻿@model sys.Models.Quiz.QuizAttempt
+@using System
+@using System.Linq
+
+@{
+    ViewBag.Title = "Quiz Results";
+    Layout = "~/Views/Shared/_LayoutPageStudent.cshtml";
+
+    // compute total + percentage
+    var totalMarks = Model.Quiz.Questions.Sum(q => q.Marks);
+    var earned = Model.Score;
+    var percent = totalMarks > 0
+                     ? Math.Round(earned * 100.0 / totalMarks, 0)
+                     : 0;
+}
+
+<h2>Results: @Model.Quiz.QuizTitle</h2>
+
+@if (Model.Quiz.PublishGradeAfterSubmission)
+{
+    <div class="alert alert-info">
+        <h3>Your Score: <strong>@earned / @totalMarks</strong> (@percent%)</h3>
+    </div>
+}
+
+@* now render each question in a colored alert *@
+@foreach (var item in Model.Quiz.Questions
+                                  .OrderBy(q => q.Id)
+                                  .Select((q, i) => new { Q = q, Index = i }))
+{
+    // C# only—no @{} block here
+    var ans = Model.Answers.FirstOrDefault(a => a.QuestionId == item.Q.Id);
+    bool correct = ans != null
+                   && ans.Selected.Equals(item.Q.Answer, StringComparison.OrdinalIgnoreCase);
+
+    var sel = ans?.Selected;
+    var selFull = sel == "A" ? item.Q.OptionA
+                   : sel == "B" ? item.Q.OptionB
+                   : sel == "C" ? item.Q.OptionC
+                   : sel == "D" ? item.Q.OptionD
+                   : "<em>—</em>";
+
+    var corrFull = item.Q.Answer == "A" ? item.Q.OptionA
+                   : item.Q.Answer == "B" ? item.Q.OptionB
+                   : item.Q.Answer == "C" ? item.Q.OptionC
+                   : item.Q.Answer == "D" ? item.Q.OptionD
+                   : "";
+
+    var alertClass = correct ? "alert-success" : "alert-danger";
+    var statusText = correct ? "Correct!" : "Wrong";
+    var statusClass = correct ? "text-success" : "text-danger";
+
+    <div class="alert @alertClass">
+        <h4 class="@statusClass">@statusText</h4>
+        <p><strong>Question @(item.Index + 1):</strong> @item.Q.QuestionText</p>
+        <p>
+            <strong>Your answer (@(ans?.Selected ?? "—")):</strong>
+            @Html.Raw(selFull)
+        </p>
+        <p>
+            <strong>Correct answer (@item.Q.Answer):</strong>
+            @corrFull
+        </p>
+        <p>
+            <strong>Explanation:</strong>
+            @item.Q.Explanation
+        </p>
+        
+    </div>
+}
+
+<div class="text-right">
+    @Html.ActionLink(
+        "← Back to Available Quizzes",
+        "Available",
+        "QuizAttempt",
+        null,
+        new { @class = "btn btn-primary" }
+    )
+</div>

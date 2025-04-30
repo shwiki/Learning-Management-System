@@ -1,0 +1,46 @@
+﻿@model IEnumerable < sys.Models.ApplicationUser > 
+
+@{
+    ViewBag.Title = "Admin Dashboard";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<!-- Success message -->
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["Success"]
+    </div>
+}
+
+<p>
+    @Html.ActionLink("Create New Teacher", "CreateTeacher", "Admin",
+        routeValues: null, htmlAttributes: new { @class = "btn btn-primary" })
+</p>
+@if (Model?.Any() ?? false)
+    {
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Email</th>
+                    <th>Contact Number</th>
+                    <th>Class Name</th>
+                </tr>
+            </thead>
+            <tbody>
+            @foreach (var t in Model)
+            {
+                <tr>
+                    <td>@t.Email</td>
+                    <td>@t.ContactNumber</td>
+                    <td>@t.ClassName</td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    }
+ else
+    {
+        <p>No teachers have been created yet.</p>
+    }

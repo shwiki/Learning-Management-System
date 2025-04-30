@@ -1,0 +1,117 @@
+﻿@model IEnumerable<sys.Models.Student.PendingUser>
+
+@{
+    ViewBag.Title = "Waiting for Approval";
+    Layout = "~/Views/Shared/_layoutPageTeacher.cshtml";
+}
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["Success"]
+    </div>
+}@{
+    Layout = "~/Views/Shared/_LayoutPageTeacher.cshtml";
+    ViewBag.Title = "Pending Requests";
+}
+
+<style>
+    :root {
+        --bs-primary: #40E0D0;
+    }
+
+    .custom-block {
+        background: #fff;
+        border-radius: .5rem;
+        padding: 1rem;
+        box-shadow: 0 .125rem .25rem rgba(0,0,0,.075);
+        margin-bottom: 0;
+    }
+
+    h3.mt-0 {
+        margin-top: 0;
+        color: var(--bs-primary);
+    }
+
+    .account-table {
+        width: 100%;
+        table-layout: auto;
+        font-size: .875rem;
+    }
+
+        .account-table th {
+            background-color: var(--bs-primary);
+            color: #fff;
+            padding: .75rem;
+        }
+
+        .account-table td {
+            padding: .75rem;
+            vertical-align: middle;
+            word-wrap: break-word;
+        }
+
+    .table-responsive {
+        overflow-x: auto;
+    }
+
+    .btn-info {
+        background-color: var(--bs-primary);
+        border-color: var(--bs-primary);
+    }
+
+    .btn-outline-danger {
+        color: #dc3545;
+        border-color: #dc3545;
+    }
+</style>
+
+@if (!Model.Any())
+{
+    <div class="alert alert-info">No pending approvals.</div>
+}
+else
+{
+    <div class="custom-block">
+        <div class="table-responsive">
+            <table class="account-table table">
+                <thead>
+                    <tr>
+                        <th scope="col">Email</th>
+                        <th scope="col">First Name</th>
+                        <th scope="col">Last Name</th>
+                        <th scope="col">Class</th>
+                        <th scope="col">Date of Birth</th>
+                        <th scope="col">Photo</th>
+                        <th scope="col">Requested Role</th>
+                        <th scope="col">Applied At</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.Email</td>
+                            <td>@item.FirstName</td>
+                            <td>@item.LastName</td>
+                            <td>@item.ClassName</td>
+                            <td>@item.DateOfBirth.ToString("MMM d, yyyy")</td>
+                            <td>
+                                @if (!string.IsNullOrEmpty(item.PhotoPath))
+                                {
+                                    <img src="@Url.Content("~/images/" + item.PhotoPath)" alt="Photo" class="img-thumbnail" style="max-width:50px;" />
+                                }
+                            </td>
+                            <td>@item.RequestedRole</td>
+                            <td>@item.AppliedAt.ToString("MMM d, yyyy")</td>
+                            <td>
+                                <a class="btn btn-sm btn-info" href="@Url.Action("Approve", new { id = item.Id })">Approve</a>
+                                <a class="btn btn-sm btn-outline-danger" href="@Url.Action("Delete", new { id = item.Id })">Delete</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+}

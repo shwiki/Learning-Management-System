@@ -1,64 +1,132 @@
 ﻿@model IEnumerable<sys.Models.Notes>
-
 @{
-    ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_LayoutPageTeacher.cshtml";
+    // Pagination setup
+    var pageQuery = Request.QueryString["page"];
+    int page = 1;
+    if (!String.IsNullOrEmpty(pageQuery) && int.TryParse(pageQuery, out var p)) { page = p; }
+    int pageSize = 4;
+    // Order descending by Id
+    var notesList = Model.OrderByDescending(n => n.Id).ToList();
+    var pagedNotes = notesList.Skip((page - 1) * pageSize).Take(pageSize);
 }
 
-<h2>Index</h2>
+<!-- Inline CSS: turquoise theme, reduced fonts -->
+<style>
+    :root {
+        --bs-primary: #40E0D0;
+    }
 
+    .custom-block {
+        background: #fff;
+        border-radius: .5rem;
+        padding: 1rem;
+        box-shadow: 0 .125rem .25rem rgba(0,0,0,.075);
+        margin-bottom: 0;
+    }
+
+    h3.mt-0 {
+        margin-top: 0;
+        color: var(--bs-primary);
+        font-size: 1.5rem;
+    }
+
+    .account-table {
+        width: 100%;
+        table-layout: auto;
+        font-size: .85rem;
+    }
+
+        .account-table th {
+            background-color: var(--bs-primary);
+            color: #fff;
+            padding: .5rem .75rem;
+        }
+
+        .account-table td {
+            padding: .5rem .75rem;
+            vertical-align: middle;
+            word-wrap: break-word;
+        }
+
+    .table-responsive {
+        overflow-x: auto;
+    }
+
+    .btn-info {
+        background-color: var(--bs-primary);
+        border-color: var(--bs-primary);
+        font-size: .8rem;
+        padding: .25rem .5rem;
+    }
+
+    .btn-outline-secondary {
+        font-size: .8rem;
+        padding: .25rem .5rem;
+    }
+</style>
+
+<h3 class="mt-0">Notes</h3>
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-sm btn-info" })
 </p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.CourseCode)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Level)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Topic)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.KeyContent)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Description)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Image)
-        </th>
-        <th></th>
-    </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.CourseCode)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Level)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Topic)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.KeyContent)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Description)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Image)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-        </td>
-    </tr>
+@if (!notesList.Any())
+{
+    <div class="alert alert-info">No notes found.</div>
 }
+else
+{
+    <div class="custom-block">
+        <div class="table-responsive">
+            <table class="account-table table">
+                <thead>
+                    <tr>
+                        <th scope="col">Subject</th>
+                        <th scope="col">Class</th>
+                        <th scope="col">Topic</th>
+                        <th scope="col">Key Content</th>
+                        <th scope="col">Description</th>
+                        <th scope="col">Image</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in pagedNotes)
+                    {
+                        <tr>
+                            <td>@item.Subject</td>
+                            <td>@item.ClassName</td>
+                            <td>@item.Topic</td>
+                            <td>@item.KeyContent</td>
+                            <td>@item.Description</td>
+                            <td>
+                                @if (!String.IsNullOrEmpty(item.Image))
+                                {
+                                    <img src="@Url.Content("~/Layout/images/" + item.Image)" alt="NoteImg" class="img-fluid" style="max-width:50px;" />
+                                }
+                            </td>
+                            <td>
+                                <a class="btn btn-sm btn-outline-secondary" href="@Url.Action("Edit", new { id = item.Id })">Edit</a>
+                                <a class="btn btn-sm btn-info" href="@Url.Action("Details", new { id = item.Id })">Details</a>
+                                <a class="btn btn-sm btn-outline-danger" href="@Url.Action("Delete", new { id = item.Id })">Delete</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
 
-</table>
+        <!-- Pagination controls -->
+        <div class="d-flex justify-content-between">
+            @if (page > 1)
+            {
+                @Html.ActionLink("Previous", "Index", new { page = page - 1 }, new { @class = "btn btn-sm btn-outline-secondary" })
+            }
+            @if (notesList.Count > page * pageSize)
+            {
+                @Html.ActionLink("Next", "Index", new { page = page + 1 }, new { @class = "btn btn-sm btn-outline-secondary" })
+            }
+        </div>
+    </div>
+}
