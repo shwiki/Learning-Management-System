@@ -1,0 +1,71 @@
+﻿@model sys.Models.Quiz.QuizAttempt
+
+@{
+    ViewBag.Title = "Quiz Results";
+    Layout = "~/Views/Shared/_LayoutQuiz.cshtml";
+}
+
+@{
+    var totalMarks = Model.Quiz.Questions.Sum(q => q.Marks);
+    var earned = Model.Score;
+    var percent = totalMarks > 0
+                     ? Math.Round(earned * 100.0 / totalMarks, 0)
+                     : 0;
+}
+
+<h2>Results: @Model.Quiz.QuizTitle</h2>
+
+@if (Model.Quiz.PublishGradeAfterSubmission)
+{
+    <div class="alert alert-info">
+        <h3>
+            Your Score:
+            <strong>@earned / @totalMarks</strong>
+            (@percent<span>%</span>)
+        </h3>
+    </div>
+}
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th style="width:5%">#</th>
+            <th>Question</th>
+            <th style="width:15%">Your Answer</th>
+            <th style="width:15%">Correct Answer</th>
+            <th style="width:10%">Marks Awarded</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var q in Model.Quiz.Questions.OrderBy(q => q.Id).Select((q, i) => new { Q = q, Index = i }))
+        {
+            // find their answer
+            var ans = Model.Answers.FirstOrDefault(a => a.QuestionId == q.Q.Id);
+            // did they get it right?
+            bool correct = ans != null
+                           && string.Equals(ans.Selected, q.Q.Answer, StringComparison.OrdinalIgnoreCase);
+            // how many marks for this question?
+            var marksAwarded = correct ? q.Q.Marks : 0;
+            <!-- choose row class -->
+            var rowClass = correct ? "table-success" : "table-danger";
+            <tr class="@rowClass">
+                <td>@(q.Index + 1)</td>
+                <td>@q.Q.QuestionText</td>
+                <td>@(ans?.Selected ?? "<em>—</em>")</td>
+                <td>@q.Q.Answer</td>
+                <td>@marksAwarded</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div class="text-right">
+    @Html.ActionLink(
+        "← Back to Available Quizzes",
+        "Available",
+        "QuizAttempt",
+        null,
+        new { @class = "btn btn-primary" }
+    )
+</div>
+

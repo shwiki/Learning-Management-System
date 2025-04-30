@@ -1,0 +1,29 @@
+﻿@model sys.Models.Quiz.CreateQ
+@{
+    ViewBag.Title = "Ready to Begin?";
+}
+
+<h2>“@Model.QuizTitle”</h2>
+<p><strong>Instructions:</strong> @Model.Instructions</p>
+
+<dl class="dl-horizontal">
+    <dt>Opens at</dt>
+    <dd>@Model.StartDate.ToString("g")</dd>
+
+    <dt>Closes at</dt>
+    <dd>@Model.EndDate.ToString("g")</dd>
+</dl>
+
+@using (Html.BeginForm("Start", "QuizAttempt", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    @Html.Hidden("quizId", Model.Id)
+
+    <button type="submit" class="btn btn-success btn-lg">
+        Confirm &amp; Start Quiz
+    </button>
+
+    @Html.ActionLink(" ← Back to Available", "Available", "QuizAttempt", null, new { @class = "btn btn-link" })
+}
+
+

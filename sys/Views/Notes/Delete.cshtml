@@ -1,23 +1,23 @@
 ﻿@model sys.Models.Notes
 
 @{
-    ViewBag.Title = "Delete";
+    
     Layout = "~/Views/Shared/_LayoutPageTeacher.cshtml";
 }
 
-<h2>Delete</h2>
+<h3>Notes/Delete</h3>
 
-<h3>Are you sure you want to delete this?</h3>
+<h4>Are you sure you want to delete this?</h4>
 <div>
     <h4>Notes</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.CourseCode)
+            @Html.DisplayNameFor(model => model.Subject)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.CourseCode)
+            @Html.DisplayFor(model => model.Subject)
         </dd>
 
         <dt>

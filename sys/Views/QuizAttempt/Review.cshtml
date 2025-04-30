@@ -1,0 +1,52 @@
+﻿@model List<sys.Models.Student.ReviewItemView>
+
+@{
+    ViewBag.Title = "Review Answers";
+}
+
+<h2>Review: @ViewBag.QuizTitle</h2>
+
+<div class="btn-group" role="group">
+    @* Go back into the last question to tweak *@
+    @Html.ActionLink(
+        "Revise Quiz",
+        "Take",
+        new { attemptId = ViewBag.AttemptId, index = Model.Count - 1 },
+        new { @class = "btn btn-default" }
+    )
+    @* Final submission *@
+    @using (Html.BeginForm("Finish", "QuizAttempt", FormMethod.Get))
+    {
+        @Html.Hidden("attemptId", (int)ViewBag.AttemptId)
+        <button type="submit" class="btn btn-success">Confirm &amp; Submit Quiz</button>
+    }
+</div>
+
+<table class="table table-striped" style="margin-top:1em">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Question</th>
+            <th>Your Answer</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Number</td>
+                <td>@item.Text</td>
+                <td>@Html.Raw(item.SelectedText)</td>
+                <td>
+                    @Html.ActionLink(
+                        "Change",
+                        "Take",
+                        new { attemptId = ViewBag.AttemptId, index = item.QuestionIndex },
+                        new { @class = "btn btn-sm btn-warning" }
+                    )
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

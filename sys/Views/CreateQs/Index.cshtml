@@ -1,0 +1,48 @@
+﻿@model IEnumerable<sys.Models.Quiz.CreateQ>
+
+@{
+  
+    Layout = "~/Views/Shared/_LayoutPageTeacher.cshtml";
+}
+
+<h3>Create Quiz/Index</h3>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>@Html.DisplayNameFor(m => m.QuizTitle)</th>
+        <th>@Html.DisplayNameFor(m => m.Subject)</th>
+        <th>@Html.DisplayNameFor(m => m.Instructions)</th>
+        <th>@Html.DisplayNameFor(m => m.StartDate)</th>
+        <th>@Html.DisplayNameFor(m => m.EndDate)</th>
+        <th>@Html.DisplayNameFor(m => m.PublishGradeAfterSubmission)</th>
+        <th></th>
+        <th>Questions</th>  <!-- new header -->
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@Html.DisplayFor(_ => item.QuizTitle)</td>
+            <td>@Html.DisplayFor(_ => item.Subject)</td>
+            <td>@Html.DisplayFor(_ => item.Instructions)</td>
+            <td>@Html.DisplayFor(_ => item.StartDate)</td>
+            <td>@Html.DisplayFor(_ => item.EndDate)</td>
+            <td>@Html.DisplayFor(_ => item.PublishGradeAfterSubmission)</td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                @Html.ActionLink("Details", "Details", new { id = item.Id })
+            </td>
+            <td>
+                @Html.ActionLink(
+                    "View Questions",
+                    "Index",                 // action in QuizQuestionController
+                    "QuizQAs",          // controller name
+                    new { quizId = item.Id },
+                    new { @class = "btn btn-sm btn-info" }
+                )
+            </td>
+        </tr>
+    }
+</table>

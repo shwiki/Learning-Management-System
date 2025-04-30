@@ -1,11 +1,10 @@
 ﻿@model IEnumerable<sys.Models.Notes>
 
 @{
-    ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_LayoutPageTeacher.cshtml";
 }
 
-<h2>Index</h2>
+<h3>Notes/Home</h3>
 
 <p>
     @Html.ActionLink("Create New", "Create")
@@ -13,7 +12,7 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.CourseCode)
+            @Html.DisplayNameFor(model => model.Subject)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Level)
@@ -30,13 +29,13 @@
         <th>
             @Html.DisplayNameFor(model => model.Image)
         </th>
-        <th></th>
+        <th>Action</th>
     </tr>
 
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.CourseCode)
+            @Html.DisplayFor(modelItem => item.Subject)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Level)
@@ -62,3 +61,47 @@
 }
 
 </table>
+<style>
+    /* Custom Table Styles */
+    .table {
+        width: 100%;
+        table-layout: fixed; /* Ensures the columns are fixed, no text overflows */
+        font-size: 14px; /* Adjust text size */
+    }
+
+        .table th, .table td {
+            padding: 0.75rem;
+            vertical-align: middle;
+            text-overflow: ellipsis; /* Ensures text truncates with ellipsis if too long */
+            word-wrap: break-word; /* Ensures long words break into multiple lines */
+        }
+
+    .table-responsive {
+        overflow-x: auto; /* Allows horizontal scroll if needed */
+    }
+
+    .table th {
+        background-color: #f8f9fa;
+        font-weight: bold;
+        text-align: left;
+    }
+
+    /* Adjust the size of the Notes columns (Description, KeyContent) */
+    .table td:nth-child(5), /* Description column */
+    .table td:nth-child(4) { /* KeyContent column */
+        width: 30%; /* Adjust this value to your needs */
+        max-width: 300px; /* Ensure the column doesn't stretch too wide */
+    }
+
+    /* Adjust the buttons in the table */
+    .table .btn {
+        padding: 5px 10px;
+        font-size: 12px;
+    }
+
+    .table img {
+        max-width: 50px;
+        height: auto;
+    }
+
+</style>

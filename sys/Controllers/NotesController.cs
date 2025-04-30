@@ -47,7 +47,7 @@ namespace sys.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,CourseCode,Level,Topic,KeyContent,Description,Image")] Notes notes, HttpPostedFileBase imageFile)
+        public ActionResult Create([Bind(Include = "Id,Level,Topic,KeyContent,Description,Image, Subject")] Notes notes, HttpPostedFileBase imageFile)
         {
             if (ModelState.IsValid)
             {
@@ -102,7 +102,7 @@ namespace sys.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,CourseCode,Level,Topic,KeyContent,Description,Image")] Notes notes, HttpPostedFileBase imageFile)
+        public ActionResult Edit([Bind(Include = "Id,Level,Topic,KeyContent,Description,Image,Subject")] Notes notes, HttpPostedFileBase imageFile)
         {
             if (ModelState.IsValid)
             {

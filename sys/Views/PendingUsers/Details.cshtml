@@ -1,0 +1,96 @@
+﻿@model sys.Models.Student.PendingUser
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+@if (TempData["Fail"] != null)
+{
+    <div class="alert alert-danger">
+        @TempData["Fail"]
+    </div>
+}
+<h2>Details</h2>
+
+<div>
+    <h4>PendingUser</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FirstName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FirstName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LastName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LastName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ClassName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ClassName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DateOfBirth)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DateOfBirth)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PhotoPath)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PhotoPath)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RequestedRole)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RequestedRole)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AppliedAt)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AppliedAt)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @using (Html.BeginForm("ApproveConfirmed", "PendingUsers", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(m => m.Id)
+
+        <button type="submit" class="btn btn-success">
+            Approve
+        </button>
+    }
+    @Html.ActionLink("Back to List", "WaitingApproval")
+</p>

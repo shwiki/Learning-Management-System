@@ -298,6 +298,46 @@ namespace sys.Controllers
                 OtherLogins = otherLogins
             });
         }
+        internal class ChallengeResult : HttpUnauthorizedResult
+        {
+            private const string XsrfKey = "XsrfId";
+
+            public ChallengeResult(string provider, string redirectUri)
+                : this(provider, redirectUri, userId: null)
+            {
+            }
+
+            public ChallengeResult(string provider, string redirectUri, string userId)
+            {
+                LoginProvider = provider;
+                RedirectUri = redirectUri;
+                UserId = userId;
+            }
+
+            public string LoginProvider { get; }
+            public string RedirectUri { get; }
+            public string UserId { get; }
+
+            public override void ExecuteResult(ControllerContext context)
+            {
+                if (context == null) throw new ArgumentNullException(nameof(context));
+
+                var props = new AuthenticationProperties { RedirectUri = RedirectUri };
+                if (UserId != null)
+                {
+                    // embed the XSRF token so GetExternalLoginInfoAsync can validate
+                    props.Dictionary[XsrfKey] = UserId;
+                }
+
+                context.HttpContext
+                       .GetOwinContext()
+                       .Authentication
+                       .Challenge(props, LoginProvider);
+
+                // send the 401 back so OWIN middleware can take over
+                base.ExecuteResult(context);
+            }
+        }
 
         //
         // POST: /Manage/LinkLogin
@@ -305,8 +345,11 @@ namespace sys.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult LinkLogin(string provider)
         {
-            // Request a redirect to the external login provider to link a login for the current user
-            return new AccountController.ChallengeResult(provider, Url.Action("LinkLoginCallback", "Manage"), User.Identity.GetUserId());
+            return new ChallengeResult(
+            provider,
+            Url.Action("LinkLoginCallback", "Manage"),
+            User.Identity.GetUserId());
+
         }
 
         //
