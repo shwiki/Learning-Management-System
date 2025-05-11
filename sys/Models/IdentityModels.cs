@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using sys.Models.Approval;
-using sys.Models.Assignment;
 using sys.Models.Quiz;
 using sys.Models.Student;
 using static sys.Models.Student.PendingUser;
@@ -36,7 +35,6 @@ namespace sys.Models
         // …and a student (child) can have many parents
         [InverseProperty("Children")]
         public virtual ICollection<ApplicationUser> Parents { get; set; }
-        public string PhotoPath { get; internal set; }
 
         public ApplicationUser()
         {
@@ -61,8 +59,6 @@ namespace sys.Models
         public DbSet<sys.Models.Quiz.CreateQ> CreateQs { get; set; }
         public DbSet<sys.Models.Quiz.QuizQA> QuizQAs { get; set; }
         public DbSet<sys.Models.Quiz.AttemptAnswer> AttemptAnswers { get; set; }
-        public DbSet<sys.Models.CreateTeacherViewModel> CreateTeacher { get; set; }
-        public DbSet<CreateAssignment> Assignments { get; set; }
         public DbSet<QuizAttempt> QuizAttempts { get; set; }
         public DbSet<PendingUser> PendingUsers { get; set; }
         public DbSet<ApprovedStudent> ApprovedStudents { get; set; }

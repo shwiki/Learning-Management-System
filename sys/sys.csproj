@@ -51,9 +51,12 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.5.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+<<<<<<< HEAD
     <Reference Include="Microsoft.AspNetCore.Http.Features, Version=5.0.17.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNetCore.Http.Features.5.0.17\lib\net461\Microsoft.AspNetCore.Http.Features.dll</HintPath>
     </Reference>
+=======
+>>>>>>> 02e5236eebc0053e43fab9edde88f030e8877ed7
     <Reference Include="Microsoft.Azure.DevOps.Comments.WebApi, Version=19.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.TeamFoundationServer.Client.19.225.1\lib\net472\Microsoft.Azure.DevOps.Comments.WebApi.dll</HintPath>
     </Reference>
@@ -79,9 +82,12 @@
     <Reference Include="Microsoft.Extensions.Logging.Abstractions, Version=9.0.0.4, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Extensions.Logging.Abstractions.9.0.4\lib\net462\Microsoft.Extensions.Logging.Abstractions.dll</HintPath>
     </Reference>
+<<<<<<< HEAD
     <Reference Include="Microsoft.Extensions.Primitives, Version=5.0.0.1, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Extensions.Primitives.5.0.1\lib\net461\Microsoft.Extensions.Primitives.dll</HintPath>
     </Reference>
+=======
+>>>>>>> 02e5236eebc0053e43fab9edde88f030e8877ed7
     <Reference Include="Microsoft.Identity.Client, Version=4.71.1.0, Culture=neutral, PublicKeyToken=0a613f4dd989e8ae, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Identity.Client.4.71.1\lib\net472\Microsoft.Identity.Client.dll</HintPath>
     </Reference>
@@ -384,7 +390,10 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\Approval\PendingUsersController.cs" />
+<<<<<<< HEAD
     <Compile Include="Controllers\Assignment\CreateAssignmentsController.cs" />
+=======
+>>>>>>> 02e5236eebc0053e43fab9edde88f030e8877ed7
     <Compile Include="Controllers\Dashboards\ParentDashboardController.cs" />
     <Compile Include="Controllers\Dashboards\StudentDashboardController.cs" />
     <Compile Include="Controllers\Dashboards\TeacherDashboardController.cs" />
@@ -437,6 +446,7 @@
     <Compile Include="Migrations\202504302230523_Notesupdate.Designer.cs">
       <DependentUpon>202504302230523_Notesupdate.cs</DependentUpon>
     </Compile>
+<<<<<<< HEAD
     <Compile Include="Migrations\202505032050506_addedteacher.cs" />
     <Compile Include="Migrations\202505032050506_addedteacher.Designer.cs">
       <DependentUpon>202505032050506_addedteacher.cs</DependentUpon>
@@ -456,6 +466,10 @@
     <Compile Include="Models\Approval\ApprovedParent.cs" />
     <Compile Include="Models\Approval\ApprovedStudent.cs" />
     <Compile Include="Models\Assignment\CreateAssignment.cs" />
+=======
+    <Compile Include="Models\Approval\ApprovedParent.cs" />
+    <Compile Include="Models\Approval\ApprovedStudent.cs" />
+>>>>>>> 02e5236eebc0053e43fab9edde88f030e8877ed7
     <Compile Include="Models\CreateTeacherViewModel.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -545,7 +559,10 @@
     <Content Include="layout\css\bootstrap.min.css" />
     <Content Include="layout\css\tooplate-mini-finance.css" />
     <Content Include="layout\images\credit-card.png" />
+<<<<<<< HEAD
     <Content Include="layout\images\account-icon.png" />
+=======
+>>>>>>> 02e5236eebc0053e43fab9edde88f030e8877ed7
     <Content Include="layout\images\flag\australia.png" />
     <Content Include="layout\images\flag\european-union.png" />
     <Content Include="layout\images\flag\singapore.png" />
@@ -624,7 +641,11 @@
     <Content Include="Views\Notes\Details.cshtml" />
     <Content Include="Views\Notes\Edit.cshtml" />
     <Content Include="Views\Notes\Index.cshtml" />
+<<<<<<< HEAD
     <Content Include="Views\Shared\_LayoutPageParent.cshtml" />
+=======
+    <Content Include="Views\Shared\_LayoutQuiz.cshtml" />
+>>>>>>> 02e5236eebc0053e43fab9edde88f030e8877ed7
     <Content Include="Views\CreateQs\Create.cshtml" />
     <Content Include="Views\CreateQs\Delete.cshtml" />
     <Content Include="Views\CreateQs\Details.cshtml" />
@@ -653,12 +674,15 @@
     <Content Include="Views\TeacherDashboard\Index.cshtml" />
     <Content Include="Views\StudentDashboard\Index.cshtml" />
     <Content Include="Views\ParentDashboard\Index.cshtml" />
+<<<<<<< HEAD
     <Content Include="Views\TeacherDashboard\MyClass.cshtml" />
     <Content Include="Views\CreateAssignments\Create.cshtml" />
     <Content Include="Views\CreateAssignments\Delete.cshtml" />
     <Content Include="Views\CreateAssignments\Details.cshtml" />
     <Content Include="Views\CreateAssignments\Edit.cshtml" />
     <Content Include="Views\CreateAssignments\Index.cshtml" />
+=======
+>>>>>>> 02e5236eebc0053e43fab9edde88f030e8877ed7
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -748,6 +772,7 @@
     <EmbeddedResource Include="Migrations\202504302230523_Notesupdate.resx">
       <DependentUpon>202504302230523_Notesupdate.cs</DependentUpon>
     </EmbeddedResource>
+<<<<<<< HEAD
     <EmbeddedResource Include="Migrations\202505032050506_addedteacher.resx">
       <DependentUpon>202505032050506_addedteacher.cs</DependentUpon>
     </EmbeddedResource>
@@ -760,6 +785,8 @@
     <EmbeddedResource Include="Migrations\202505051913557_qwerty.resx">
       <DependentUpon>202505051913557_qwerty.cs</DependentUpon>
     </EmbeddedResource>
+=======
+>>>>>>> 02e5236eebc0053e43fab9edde88f030e8877ed7
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
