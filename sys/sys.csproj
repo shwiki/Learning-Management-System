@@ -641,11 +641,7 @@
     <Content Include="Views\Notes\Details.cshtml" />
     <Content Include="Views\Notes\Edit.cshtml" />
     <Content Include="Views\Notes\Index.cshtml" />
-<<<<<<< HEAD
     <Content Include="Views\Shared\_LayoutPageParent.cshtml" />
-=======
-    <Content Include="Views\Shared\_LayoutQuiz.cshtml" />
->>>>>>> 02e5236eebc0053e43fab9edde88f030e8877ed7
     <Content Include="Views\CreateQs\Create.cshtml" />
     <Content Include="Views\CreateQs\Delete.cshtml" />
     <Content Include="Views\CreateQs\Details.cshtml" />
