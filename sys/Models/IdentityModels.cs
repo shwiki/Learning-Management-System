@@ -35,6 +35,7 @@ namespace sys.Models
         // …and a student (child) can have many parents
         [InverseProperty("Children")]
         public virtual ICollection<ApplicationUser> Parents { get; set; }
+        public string PhotoPath { get; internal set; }
 
         public ApplicationUser()
         {
@@ -59,6 +60,8 @@ namespace sys.Models
         public DbSet<sys.Models.Quiz.CreateQ> CreateQs { get; set; }
         public DbSet<sys.Models.Quiz.QuizQA> QuizQAs { get; set; }
         public DbSet<sys.Models.Quiz.AttemptAnswer> AttemptAnswers { get; set; }
+        public DbSet<sys.Models.Assignment.CreateAssignment> CreateAssignments { get; set; }
+        public DbSet<sys.Models.CreateTeacherViewModel> CreateTeacherViewModel { get; set; }
         public DbSet<QuizAttempt> QuizAttempts { get; set; }
         public DbSet<PendingUser> PendingUsers { get; set; }
         public DbSet<ApprovedStudent> ApprovedStudents { get; set; }

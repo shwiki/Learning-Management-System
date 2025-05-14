@@ -29,7 +29,7 @@ namespace sys.Controllers.Assignment
 
             // 2) Build filtered, sorted query
             const int pageSize = 4;
-            var query = db.Assignments
+            var query = db.CreateAssignments
                           .Where(a => a.ClassName == teacherClass)
                           .OrderByDescending(a => a.Id);
 
@@ -53,7 +53,7 @@ namespace sys.Controllers.Assignment
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            CreateAssignment createAssignment = db.Assignments.Find(id);
+            CreateAssignment createAssignment = db.CreateAssignments.Find(id);
             if (createAssignment == null)
             {
                 return HttpNotFound();
@@ -103,7 +103,7 @@ namespace sys.Controllers.Assignment
             // 2) Save if valid
             if (ModelState.IsValid)
             {
-                db.Assignments.Add(createAssignment);
+                db.CreateAssignments.Add(createAssignment);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -119,7 +119,7 @@ namespace sys.Controllers.Assignment
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            CreateAssignment createAssignment = db.Assignments.Find(id);
+            CreateAssignment createAssignment = db.CreateAssignments.Find(id);
             if (createAssignment == null)
             {
                 return HttpNotFound();
@@ -150,7 +150,7 @@ namespace sys.Controllers.Assignment
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            CreateAssignment createAssignment = db.Assignments.Find(id);
+            CreateAssignment createAssignment = db.CreateAssignments.Find(id);
             if (createAssignment == null)
             {
                 return HttpNotFound();
@@ -163,8 +163,8 @@ namespace sys.Controllers.Assignment
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            CreateAssignment createAssignment = db.Assignments.Find(id);
-            db.Assignments.Remove(createAssignment);
+            CreateAssignment createAssignment = db.CreateAssignments.Find(id);
+            db.CreateAssignments.Remove(createAssignment);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

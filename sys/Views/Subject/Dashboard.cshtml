@@ -1,0 +1,145 @@
+﻿@model sys.Models.SubjectDashBoardViewModel
+
+@{
+    Layout = "~/Views/Shared/_LayoutPageStudent.cshtml";
+    ViewBag.Title = Model.SubjectName;
+}
+
+<!-- Page header -->
+<div class="title-group mb-3">
+    <h1 class="h2 mb-0">@Model.SubjectName</h1>
+</div>
+
+<!-- Quizzes -->
+@{
+    var quizzes = Model.Quizzes;
+}
+<div class="custom-block bg-white mb-4">
+    <h5 class="mb-3">Available Quizzes</h5>
+    @if (!quizzes.Any())
+    {
+        <div class="alert alert-info">No active quizzes at the moment.</div>
+    }
+    else
+    {
+        <div class="table-responsive">
+            <table class="account-table table">
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Start</th>
+                        <th>End</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var q in quizzes)
+                    {
+                        <tr>
+                            <td>@q.QuizTitle</td>
+                            <td>@q.StartDate.ToString("MMM d, yyyy")</td>
+                            <td>@q.EndDate.ToString("MMM d, yyyy")</td>
+                            <td>
+                                <a class="btn btn-sm btn-info"
+                                   href="@Url.Action("Take","Quiz", new { id = q.Id })">
+                                    Take Quiz
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+</div>
+
+<!-- Assignments -->
+@{
+    var assigns = Model.Assignments;
+}
+<div class="custom-block bg-white mb-4">
+    <h5 class="mb-3">Pending Assignments</h5>
+    @if (!assigns.Any())
+    {
+        <div class="alert alert-info">No pending assignments right now.</div>
+    }
+    else
+    {
+        <div class="table-responsive">
+            <table class="account-table table">
+                <thead>
+                    <tr>
+                        <th>Start</th>
+                        <th>Due</th>
+                        <th>Download</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var a in assigns)
+                    {
+                        <tr>
+                            <td>@a.StartDate.ToString("MMM d, yyyy")</td>
+                            <td>@a.EndDate.ToString("MMM d, yyyy")</td>
+                            <td>
+                                @if (!string.IsNullOrEmpty(a.FilePath))
+                                {
+                                    <a class="btn btn-sm btn-outline-secondary"
+                                       href="@Url.Content(a.FilePath)"
+                                       target="_blank">
+                                        Get File
+                                    </a>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+</div>
+
+<!-- Notes -->
+@{
+    var notes = Model.Notes;
+}
+<div class="custom-block bg-white mb-4">
+    <h5 class="mb-3">Notes</h5>
+    @if (!notes.Any())
+    {
+        <div class="alert alert-info">No notes available.</div>
+    }
+    else
+    {
+        <div class="table-responsive">
+            <table class="account-table table">
+                <thead>
+                    <tr>
+                        <th>Topic</th>
+                        <th>Description</th>
+                        <th>Download</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var n in notes)
+                    {
+                        <tr>
+                            <td>@n.Topic</td>
+                            <td>@n.Description</td>
+                            <td>
+                                @if (!string.IsNullOrEmpty(n.Image))
+                                {
+                                    <a class="btn btn-sm btn-outline-secondary"
+                                       href="@Url.Content(n.Image)"
+                                       target="_blank">
+                                        View
+                                    </a>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+</div>
+

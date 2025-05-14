@@ -110,7 +110,7 @@ namespace sys.Controllers
             });
 
             // --- 5) Persist the same VM into your Teachers table ---
-            _db.CreateTeacher.Add(model);
+            _db.CreateTeacherViewModel.Add(model);
             await _db.SaveChangesAsync();
 
             TempData["Success"] = $"Teacher {model.Email} created and emailed.";

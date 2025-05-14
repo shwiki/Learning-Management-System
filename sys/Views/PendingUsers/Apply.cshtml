@@ -1,85 +1,83 @@
 ﻿@model sys.Models.Student.PendingUser
 @{
-    ViewBag.Title = "Create";
-    Layout = "~/Views/Shared/_layout.cshtml";
+    ViewBag.Title = "Apply";
+    Layout = "~/Views/Shared/_layout.cshtml"; // use your appropriate layout
 }
-<h2>Apply</h2>
 
-@using (Html.BeginForm("Apply", "PendingUsers", FormMethod.Post, new { enctype = "multipart/form-data" }))
-{
-    @Html.AntiForgeryToken()
-
-    <div class="form-horizontal">
-        <h4>PendingUser</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+<div class="container" style="margin-top: 3rem;">
+    <div class="card shadow-lg mx-auto" style="max-width: 800px;">
+        <div class="card-body p-5">
+            <div class="title-group mb-4 text-center">
+                <h2 class="h3 mb-1">Student Application</h2>
+                <small class="text-muted">Complete the form below to apply</small>
             </div>
-        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.FirstName, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
-            </div>
-        </div>
+            @using (Html.BeginForm("Apply", "PendingUsers", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                @Html.AntiForgeryToken()
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.LastName, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
-            </div>
-        </div>
+                <!-- Centered input rows -->
+                <div class="mb-3 row justify-content-center">
+                    <div class="col-lg-8">
+                        @Html.LabelFor(m => m.Email, new { @class = "form-label" })
+                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control form-control-lg text-center", placeholder = "you@example.com" })
+                        @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                    </div>
+                </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.ClassName, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EnumDropDownListFor(model => model.ClassName, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.ClassName, "", new { @class = "text-danger" })
-            </div>
-        </div>
+                <div class="mb-3 row justify-content-center">
+                    <div class="col-lg-8">
+                        @Html.LabelFor(m => m.FirstName, new { @class = "form-label" })
+                        @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control form-control-lg text-center", placeholder = "First Name" })
+                        @Html.ValidationMessageFor(m => m.FirstName, "", new { @class = "text-danger" })
+                    </div>
+                </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.DateOfBirth, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.TextBoxFor(
-                    model => model.DateOfBirth,
-                    "{0:yyyy-MM-dd}",
-                    new { @type = "date", @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.DateOfBirth, "", new { @class = "text-danger" })
-            </div>
-        </div>
+                <div class="mb-3 row justify-content-center">
+                    <div class="col-lg-8">
+                        @Html.LabelFor(m => m.LastName, new { @class = "form-label" })
+                        @Html.TextBoxFor(m => m.LastName, new { @class = "form-control form-control-lg text-center", placeholder = "Last Name" })
+                        @Html.ValidationMessageFor(m => m.LastName, "", new { @class = "text-danger" })
+                    </div>
+                </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.PhotoPath, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <input type="file" name="Photo" class="form-control" />
-                @Html.ValidationMessageFor(model => model.PhotoPath, "", new { @class = "text-danger" })
-            </div>
-        </div>
+                <div class="mb-3 row justify-content-center">
+                    <div class="col-lg-8">
+                        @Html.LabelFor(m => m.ClassName, new { @class = "form-label" })
+                        @Html.EnumDropDownListFor(m => m.ClassName, new { @class = "form-select form-select-lg text-center" })
+                        @Html.ValidationMessageFor(m => m.ClassName, "", new { @class = "text-danger" })
+                    </div>
+                </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.RequestedRole, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EnumDropDownListFor(model => model.RequestedRole, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.RequestedRole, "", new { @class = "text-danger" })
-            </div>
-        </div>
+                <div class="mb-3 row justify-content-center">
+                    <div class="col-lg-8">
+                        @Html.LabelFor(m => m.DateOfBirth, new { @class = "form-label" })
+                        @Html.TextBoxFor(m => m.DateOfBirth, "{0:yyyy-MM-dd}", new { type = "date", @class = "form-control form-control-lg text-center" })
+                        @Html.ValidationMessageFor(m => m.DateOfBirth, "", new { @class = "text-danger" })
+                    </div>
+                </div>
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Apply" class="btn btn-default" />
-            </div>
+                <div class="mb-4 row justify-content-center">
+                    <div class="col-lg-8">
+                        @Html.Label("Photo", "Profile Photo", new { @class = "form-label" })
+                        <input type="file" name="Photo" class="form-control form-control-lg" />
+                        @Html.ValidationMessageFor(m => m.PhotoPath, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="mb-4 row justify-content-center">
+                    <div class="col-lg-8">
+                        @Html.LabelFor(m => m.RequestedRole, new { @class = "form-label" })
+                        @Html.EnumDropDownListFor(m => m.RequestedRole, new { @class = "form-select form-select-lg text-center" })
+                        @Html.ValidationMessageFor(m => m.RequestedRole, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-center mt-4">
+                    <button type="reset" class="btn btn-outline-secondary btn-lg me-3 px-5">Reset</button>
+                    <button type="submit" class="btn btn-primary btn-lg px-5">Submit</button>
+                </div>
+            }
         </div>
     </div>
-}
-
-<div>
-    @Html.ActionLink("Back to home", "Index", "Home")
 </div>
