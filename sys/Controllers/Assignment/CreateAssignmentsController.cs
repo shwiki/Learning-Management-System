@@ -11,6 +11,7 @@ using sys.Models;
 using sys.Models.Assignment;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
+using sys.Models.ViewModels;
 
 namespace sys.Controllers.Assignment
 {
@@ -18,7 +19,7 @@ namespace sys.Controllers.Assignment
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        // GET: CreateAssignments
+        [Authorize(Roles = "Teacher")]
         public ActionResult Index(int page = 1)
         {
             // 1) Get the current teacher’s ClassName
@@ -46,7 +47,7 @@ namespace sys.Controllers.Assignment
             return View(paged);
         }
 
-        // GET: CreateAssignments/Details/5
+        [Authorize(Roles = "Teacher")]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -67,13 +68,11 @@ namespace sys.Controllers.Assignment
             return View();
         }
 
-        // POST: CreateAssignments/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "Teacher")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(
-    [Bind(Include = "Id,Subject,ClassName,StartDate,EndDate,FilePath")]
+    [Bind(Include = "Id,Subject,Title, ClassName,StartDate,EndDate,FilePath")]
     CreateAssignment createAssignment,
     HttpPostedFileBase FileUpload)
         {
@@ -111,8 +110,8 @@ namespace sys.Controllers.Assignment
             // 3) On error, re-show form
             return View(createAssignment);
         }
-
-        // GET: CreateAssignments/Edit/5
+        
+        [Authorize(Roles = "Teacher")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -127,12 +126,10 @@ namespace sys.Controllers.Assignment
             return View(createAssignment);
         }
 
-        // POST: CreateAssignments/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "Teacher")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Subject, ClassName,StartDate,EndDate,FilePath")] CreateAssignment createAssignment)
+        public ActionResult Edit([Bind(Include = "Id,Subject, Title, ClassName,StartDate,EndDate,FilePath")] CreateAssignment createAssignment)
         {
             if (ModelState.IsValid)
             {

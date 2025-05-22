@@ -150,6 +150,15 @@
                             <a class="nav-link" href="@Url.Action("Index","CreateQs")"><i class="bi-pencil-square me-2"></i>Quiz</a>
                         </li>
                         <li class="nav-item">
+                            @Html.ActionLink(
+                              "Mark Assignments",
+                              "Index",
+                              "Assignment",
+                              null,
+                              new { @class = "nav-link" }
+                            )
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link" href="@Url.Action("WaitingApproval", "PendingUsers")"><i class="bi-person-check me-2"></i>Approve Student</a>
                         </li>
                         <li class="nav-item">

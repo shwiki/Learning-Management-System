@@ -15,6 +15,7 @@ using sys.Models.Student;
 using sys.Helpers;
 using static sys.Models.Student.PendingUser;
 using sys.Models.Approval;
+using sys.Models.Chat;
 
 namespace sys.Controllers.Approval
 {
@@ -133,6 +134,7 @@ namespace sys.Controllers.Approval
 
             // 4) Assign the appropriate role (e.g., Student or Parent)
             await userMgr.AddToRoleAsync(user.Id, pu.RequestedRole.ToString());
+            
 
             // 5) Send email with the credentials + reset link
             var token = await userMgr.GeneratePasswordResetTokenAsync(user.Id);

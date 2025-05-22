@@ -1,0 +1,218 @@
+﻿@model sys.ViewModels.ChatViewModel
+@using Microsoft.AspNet.Identity
+
+@{
+    Layout = "~/Views/Shared/_LayoutPageStudent.cshtml";
+    var myId = User.Identity.GetUserId();
+}
+
+<h3>Chat with @Model.RecipientName</h3>
+
+<div class="chat-window d-flex flex-column" style="height:75vh;">
+    <!-- messages list -->
+    <div class="messages-list flex-grow-1 overflow-auto mb-2">
+        @foreach (var msg in Model.Messages)
+        {
+            var isMine = msg.SenderId == myId;
+            <div class="message-container @(isMine ? "outgoing" : "incoming")">
+                <div class="message-body">
+                    @if (!String.IsNullOrWhiteSpace(msg.TextContent))
+                    {
+                        <span>@msg.TextContent</span>
+                    }
+                    @* render any attachments *@
+                    @foreach (var a in msg.Attachments)
+                    {
+                        if (a.Type == sys.Models.Chat.MessageAttachment.AttachmentType.Image)
+                        {
+                            <a href="@Url.Content(a.FilePath)"
+                               target="_blank"
+                               download
+                               class="d-inline-block mb-2">
+                                <img class="message-attachment-img"
+                                     src="@Url.Content(a.FilePath)" />
+                            </a>
+                        }
+                        else if (a.Type == sys.Models.Chat.MessageAttachment.AttachmentType.Audio)
+                        {
+                            <audio class="message-attachment-audio" controls
+                                   src="@Url.Content(a.FilePath)">
+                            </audio>
+                        }
+                    }
+                    </div>
+                <div class="d-flex justify-content-between align-items-center mt-1">
+                    <small class="text-muted message-timestamp">
+                        @msg.SentAt.ToLocalTime().ToString("g")
+                    </small>
+                    @if (isMine)
+                    {
+                        <i class="bi @(msg.IsRead ? "bi-check2-all text-primary" : "bi-check")"></i>
+                    }
+                </div>
+            </div>
+        }
+    </div>
+
+    @using (Html.BeginForm("Chat", "StudentMessages",
+                           FormMethod.Post,
+                           new { enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(m => m.RecipientId)
+
+        @* Hidden file inputs to be populated *@
+        <input type="file" name="AudioUpload" id="AudioUpload" accept="audio/*" hidden />
+        <input type="file" name="ImageUpload" id="ImageUpload" accept="image/*" hidden />
+
+        <div class="d-flex align-items-center mb-2">
+            <button type="button" id="startRec" class="btn btn-sm btn-outline-secondary me-1">🎤</button>
+            <button type="button" id="stopRec" class="btn btn-sm btn-outline-secondary me-1" disabled>⏹</button>
+            <span id="recordTimer" class="me-2 text-danger" style="min-width:40px; display:inline-block;">
+                00:00
+            </span>
+            <audio id="playback" controls style="display:none; max-height:40px; margin-right:8px;"></audio>
+
+            <button type="button"
+                    class="btn btn-sm btn-outline-secondary me-1"
+                    onclick="document.getElementById('ImageUpload').click()">
+                📷
+            </button>
+            <img id="imagePreview"
+                 style="display:none; max-height:48px; margin-right:8px; border-radius:.5rem;" />
+        </div>
+
+        <div class="input-group">
+            @Html.TextBoxFor(m => m.NewMessageContent, new
+            {
+                @class = "form-control",
+                placeholder = "Type a message…",
+                autocomplete = "off"
+            })
+            <button type="submit" class="btn btn-primary">
+                <i class="bi bi-send"></i>
+            </button>
+        </div>
+    }
+</div>
+<style>
+    .chat-window {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .messages-list {
+        flex: 1;
+        overflow-y: auto;
+        padding-right: .5rem;
+    }
+
+    .message-container {
+        display: flex;
+        flex-direction: column;
+        margin: .5rem;
+        max-width: 70%;
+        width: auto;
+    }
+
+    .incoming {
+        align-self: flex-start;
+    }
+
+    .outgoing {
+        align-self: flex-end;
+    }
+
+    .message-body {
+        padding: .6rem .8rem;
+        border-radius: .75rem;
+        background: #f1f0f0;
+        display: inline-block;
+    }
+
+    .outgoing .message-body {
+        background: #dcf8c6;
+    }
+
+    .message-timestamp {
+        font-size: .7rem;
+        color: gray;
+    }
+
+    .message-attachment-audio {
+        display: block;
+        margin-top: .5rem;
+    }
+
+    .message-attachment-img {
+        max-width: 200px;
+        max-height: 200px;
+        display: block;
+        margin-top: .5rem;
+        border-radius: .5rem;
+    }
+
+    .input-group {
+        margin-top: .5rem;
+    }
+</style>
+
+@section Scripts {
+    <script>
+        let mediaRecorder, audioChunks = [], recordStart, timerInterval;
+
+        document.getElementById("startRec").addEventListener("click", async () => {
+            // begin recording
+            let stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+            mediaRecorder = new MediaRecorder(stream);
+            mediaRecorder.ondataavailable = e => audioChunks.push(e.data);
+            mediaRecorder.onstop = onRecordingStop;
+            mediaRecorder.start();
+
+            // reset & start timer
+            recordStart = Date.now();
+            document.getElementById("recordTimer").textContent = "00:00";
+            timerInterval = setInterval(() => {
+                let diff = Date.now() - recordStart;
+                let sec = Math.floor(diff / 1000);
+                let m = String(Math.floor(sec / 60)).padStart(2, "0");
+                let s = String(sec % 60).padStart(2, "0");
+                document.getElementById("recordTimer").textContent = `${m}:${s}`;
+            }, 500);
+
+            document.getElementById("stopRec").disabled = false;
+        });
+
+        document.getElementById("stopRec").addEventListener("click", () => {
+            mediaRecorder.stop();
+            document.getElementById("stopRec").disabled = true;
+            clearInterval(timerInterval);
+        });
+
+        function onRecordingStop() {
+            // build file & attach to form
+            const blob = new Blob(audioChunks, { type: "audio/webm" });
+            audioChunks = [];
+            const file = new File([blob], "recording.webm", { type: "audio/webm" });
+            const dt = new DataTransfer();
+            dt.items.add(file);
+            document.getElementById("AudioUpload").files = dt.files;
+
+            // show playback
+            const url = URL.createObjectURL(blob);
+            const player = document.getElementById("playback");
+            player.src = url;
+            player.style.display = "inline-block";
+        }
+
+        // Image upload preview
+        document.getElementById("ImageUpload").addEventListener("change", event => {
+            const file = event.target.files[0];
+            if (!file) return;
+            const url = URL.createObjectURL(file);
+            const img = document.getElementById("imagePreview");
+            img.src = url;
+            img.style.display = "inline-block";
+        });
+    </script>
+}

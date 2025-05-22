@@ -1,0 +1,36 @@
+﻿@model IEnumerable<sys.Models.Assignment.CreateAssignment>
+@{
+    ViewBag.Title = "Your Assignments";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Your Assignments</h2>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Subject</th>
+            <th>Due</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var a in Model)
+        {
+            <tr>
+                <td>@a.Title</td>
+                <td>@a.Subject</td>
+                <td>@a.EndDate:MMM d, yyyy</td>
+                <td>
+                    @Html.ActionLink(
+                      "View Submissions",
+                      "Submissions",
+                      "Assignment",
+                      new { assignmentId = a.Id },            // now we have 'a'
+                      new { @class = "btn btn-sm btn-primary" })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+

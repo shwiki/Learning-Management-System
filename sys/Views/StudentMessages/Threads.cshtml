@@ -1,0 +1,54 @@
+﻿@model IEnumerable<sys.ViewModels.ChatThreadViewModel>
+@{
+    Layout = "~/Views/Shared/_LayoutPageStudent.cshtml";
+}
+
+<h2>Chats</h2>
+
+<div class="list-group">
+    @foreach (var thread in Model)
+    {
+        <a href="@Url.Action("Chat","StudentMessages", new { partnerId = thread.ConversationPartnerId })"
+           class="list-group-item list-group-item-action d-flex align-items-center">
+
+            <img src="@(Url.Content(thread.PartnerPhotoPath ?? "~/Layout/images/account-icon.png"))"
+                 class="rounded-circle me-3"
+                 style="width:48px;height:48px;"
+                 alt="@thread.ConversationPartnerName" />
+
+            <div class="flex-grow-1">
+                <div class="d-flex justify-content-between">
+                    <strong>@thread.ConversationPartnerName</strong>
+                    <small class="text-muted">
+                        @(thread.LastMessageTime.HasValue
+                ? thread.LastMessageTime.Value.ToLocalTime().ToString("g")
+                : "")
+                    </small>
+                </div>
+                <div class="d-flex justify-content-between align-items-center">
+                    <span class="text-truncate" style="max-width:200px;">
+                        @thread.LastMessageSnippet
+                    </span>
+                    @if (thread.UnreadCount > 0)
+                    {
+                        <span class="badge bg-primary rounded-pill">
+                            @thread.UnreadCount
+                        </span>
+                    }
+                </div>
+            </div>
+        </a>
+    }
+</div>
+
+<style>
+    .list-group-item {
+        padding: .75rem 1rem;
+    }
+
+    .text-truncate {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+</style>

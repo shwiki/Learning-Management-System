@@ -11,9 +11,13 @@ namespace sys.Models
     {
         public string SubjectName { get; set; }
 
-        public IEnumerable<CreateQ> Quizzes { get; set; }
+        // quizzes the student *can* still start
+        public IEnumerable<CreateQ> AvailableQuizzes { get; set; }
+
+        // the student’s past attempts in this subject
+        public IEnumerable<QuizAttempt> ExamResults { get; set; }
+
         public IEnumerable<CreateAssignment> Assignments { get; set; }
         public IEnumerable<Notes> Notes { get; set; }
-        public IEnumerable<QuizAttempt> ExamResults { get; set; }
     }
 }

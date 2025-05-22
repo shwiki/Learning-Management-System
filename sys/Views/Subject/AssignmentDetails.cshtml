@@ -1,0 +1,54 @@
+﻿@model sys.Models.ViewModels.AssignmentDetailsViewModel
+@{
+    Layout = "~/Views/Shared/_LayoutPageStudent.cshtml";
+}
+
+<div class="card mb-4">
+    <div class="card-header">
+        <h4>@Model.Assignment.Title</h4>
+    </div>
+    <div class="card-body">
+        <p><strong>Subject:</strong> @Model.Assignment.Subject</p>
+        <p><strong>Start:</strong> @Model.Assignment.StartDate.ToString("MMM d, yyyy")</p>
+        <p><strong>Due:</strong> @Model.Assignment.EndDate.ToString("MMM d, yyyy")</p>
+        <p>@Model.Assignment.Title</p>
+
+        @if (!string.IsNullOrEmpty(Model.Assignment.FilePath))
+        {
+            <a class="btn btn-outline-secondary mb-3"
+               href="@Url.Content(Model.Assignment.FilePath)"
+               target="_blank">
+                Download Assignment
+            </a>
+        }
+
+        <hr />
+
+        @if (Model.Submission != null)
+        {
+            <div class="alert alert-success">
+                You submitted on @Model.Submission.SubmittedOn.ToString("f")<br />
+                <a href="@Url.Content(Model.Submission.FilePath)" target="_blank">
+                    View your submission
+                </a>
+            </div>
+        }
+        else
+        {
+            using (Html.BeginForm("SubmitAssignment", "Subject",
+                                  new { id = Model.Assignment.Id },
+                                  FormMethod.Post,
+                                  new { enctype = "multipart/form-data" }))
+            {
+                @Html.AntiForgeryToken()
+                <div class="form-group">
+                    <label for="file">Upload your work</label>
+                    <input type="file" name="file" class="form-control-file" required />
+                </div>
+                <button type="submit" class="btn btn-primary">
+                    Submit Assignment
+                </button>
+            }
+        }
+    </div>
+</div>

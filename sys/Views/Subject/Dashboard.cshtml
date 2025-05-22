@@ -1,8 +1,8 @@
 ﻿@model sys.Models.SubjectDashBoardViewModel
-
+@using System.Web.Mvc.Html
 @{
     Layout = "~/Views/Shared/_LayoutPageStudent.cshtml";
-    ViewBag.Title = Model.SubjectName;
+
 }
 
 <!-- Page header -->
@@ -10,46 +10,75 @@
     <h1 class="h2 mb-0">@Model.SubjectName</h1>
 </div>
 
-<!-- Quizzes -->
-@{
-    var quizzes = Model.Quizzes;
-}
-<div class="custom-block bg-white mb-4">
-    <h5 class="mb-3">Available Quizzes</h5>
-    @if (!quizzes.Any())
+<!-- Available Quizzes -->
+<div class="custom-block bg-light mb-4">
+    <h5>Available Quizzes</h5>
+    @if (!Model.AvailableQuizzes.Any())
     {
-        <div class="alert alert-info">No active quizzes at the moment.</div>
+        <div class="alert alert-info">No quizzes right now.</div>
     }
     else
     {
-        <div class="table-responsive">
-            <table class="account-table table">
-                <thead>
+        <table class="table">
+            <thead>
+                <tr><th>Title</th><th>Start</th><th>End</th><th></th></tr>
+            </thead>
+            <tbody>
+                @foreach (var q in Model.AvailableQuizzes)
+                {
                     <tr>
-                        <th>Title</th>
-                        <th>Start</th>
-                        <th>End</th>
-                        <th></th>
+                        <td>@q.QuizTitle</td>
+                        <td>@q.StartDate.ToString("g")</td>
+                        <td>@q.EndDate  .ToString("g")</td>
+                        <td>
+                            @Html.ActionLink(
+                               "Start",
+                               "Confirm",
+                               "QuizAttempt",
+                               new { quizId = q.Id },
+                               new { @class = "btn btn-sm btn-primary" })
+                        </td>
                     </tr>
-                </thead>
-                <tbody>
-                    @foreach (var q in quizzes)
-                    {
-                        <tr>
-                            <td>@q.QuizTitle</td>
-                            <td>@q.StartDate.ToString("MMM d, yyyy")</td>
-                            <td>@q.EndDate.ToString("MMM d, yyyy")</td>
-                            <td>
-                                <a class="btn btn-sm btn-info"
-                                   href="@Url.Action("Take","Quiz", new { id = q.Id })">
-                                    Take Quiz
-                                </a>
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-        </div>
+                }
+            </tbody>
+        </table>
+    }
+</div>
+
+<!-- Past Quiz Attempts -->
+<div class="custom-block bg-light mb-4">
+    <h5>Your Quiz Attempts</h5>
+    @if (!Model.ExamResults.Any())
+    {
+        <div class="alert alert-info">You haven’t taken any quizzes yet.</div>
+    }
+    else
+    {
+        <table class="table">
+            <thead>
+                <tr><th>Quiz</th><th>Started</th><th>Score</th><th></th></tr>
+            </thead>
+            <tbody>
+                @foreach (var a in Model.ExamResults)
+                {
+                    <tr>
+                        <td>@a.Quiz.QuizTitle</td>
+                        <td>@a.Started.ToString("g")</td>
+                        <td>
+                            @(a.Score > 0 ? a.Score.ToString() : "–")
+                        </td>
+                        <td>
+                            @Html.ActionLink(
+                              "Review",
+                              "Result",
+                              "QuizAttempt",
+                              new { attemptId = a.Id },
+                              new { @class = "btn btn-sm btn-secondary" })
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
     }
 </div>
 
@@ -65,39 +94,21 @@
     }
     else
     {
-        <div class="table-responsive">
-            <table class="account-table table">
-                <thead>
-                    <tr>
-                        <th>Start</th>
-                        <th>Due</th>
-                        <th>Download</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var a in assigns)
-                    {
-                        <tr>
-                            <td>@a.StartDate.ToString("MMM d, yyyy")</td>
-                            <td>@a.EndDate.ToString("MMM d, yyyy")</td>
-                            <td>
-                                @if (!string.IsNullOrEmpty(a.FilePath))
-                                {
-                                    <a class="btn btn-sm btn-outline-secondary"
-                                       href="@Url.Content(a.FilePath)"
-                                       target="_blank">
-                                        Get File
-                                    </a>
-                                }
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-        </div>
+        <ul class="list-group">
+            @foreach (var a in assigns)
+            {
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <a href="@Url.Action("AssignmentDetails", "Subject", new { id = a.Id })">
+                        @a.Title
+                    </a>
+                    <span class="text-muted">
+                        Due @a.EndDate.ToString("MMM d, yyyy")
+                    </span>
+                </li>
+            }
+        </ul>
     }
 </div>
-
 <!-- Notes -->
 @{
     var notes = Model.Notes;

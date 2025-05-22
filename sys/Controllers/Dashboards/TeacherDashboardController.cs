@@ -1,9 +1,16 @@
-﻿using sys.Models;
+﻿using Microsoft.AspNet.Identity;
+using Microsoft.AspNetCore.Mvc;
+using sys.Models;
+using sys.Models.Approval;
+using sys.Models.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using static sys.Models.Student.PendingUser;
 
 namespace sys.Controllers.Dashboards
 {
@@ -19,5 +26,7 @@ namespace sys.Controllers.Dashboards
         {
             return View(db.ApprovedStudents.ToList());
         }
+        
+
     }
 }

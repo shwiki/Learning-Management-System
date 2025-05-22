@@ -1,0 +1,46 @@
+﻿@model sys.Models.ViewModels.GradeAssignmentListViewModel
+@{
+    ViewBag.Title = "Submissions to Grade";
+    Layout = "~/Views/Shared/_LayoutPageStudent.cshtml";
+}
+
+<h2>Submissions: @Model.AssignmentTitle (@Model.Subject)</h2>
+<p><strong>Due:</strong> @Model.DueDate.ToString("MMM d, yyyy")</p>
+
+@if (!Model.Submissions.Any())
+{
+    <div class="alert alert-info">
+        All submissions have been graded.
+    </div>
+}
+else
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Student</th>
+                <th>Submitted On</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var sub in Model.Submissions)
+            {
+                <tr>
+                    <td>@sub.StudentName</td>
+                    <td>@sub.SubmittedOn.ToString("g")</td>
+                    <td>
+                        @Html.ActionLink(
+                            "Grade",
+                            "Grade",
+                            "Assignment",
+                            new { submissionId = sub.SubmissionId },
+                            new { @class = "btn btn-sm btn-primary" }
+                        )
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+

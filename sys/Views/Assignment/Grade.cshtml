@@ -1,0 +1,65 @@
+﻿@model sys.Models.ViewModels.GradeSubmissionViewModel
+@{
+    ViewBag.Title = "Grade Submission";
+    Layout = "~/Views/Shared/_LayoutPageStudent.cshtml";
+}
+
+<h2>Grade Submission</h2>
+
+<div class="card mb-4">
+    <div class="card-body">
+        <dl class="row">
+            <dt class="col-sm-3">Student</dt>
+            <dd class="col-sm-9">@Model.StudentName</dd>
+
+            <dt class="col-sm-3">Submitted On</dt>
+            <dd class="col-sm-9">@Model.SubmittedOn.ToString("f")</dd>
+
+            <dt class="col-sm-3">File</dt>
+            <dd class="col-sm-9">
+                <a href="@Url.Content(Model.FilePath)" target="_blank">
+                    Download Submission
+                </a>
+            </dd>
+        </dl>
+
+        @using (Html.BeginForm("Grade", "Assignment", FormMethod.Post, new { @class = "mt-3" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(m => m.SubmissionId)
+            @Html.HiddenFor(m => m.AssignmentId)
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.Mark)
+                @Html.TextBoxFor(
+                    m => m.Mark,
+                    new
+                         {
+                      @class = "form-control",
+                      type = "number",
+                      min = "0",
+                      max = "100"
+                    }
+                )
+                @Html.ValidationMessageFor(m => m.Mark, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.Comments)
+                @Html.TextAreaFor(
+                    m => m.Comments,
+                    new { @class = "form-control", rows = 4 }
+                )
+                @Html.ValidationMessageFor(m => m.Comments, "", new { @class = "text-danger" })
+            </div>
+
+            <button type="submit" class="btn btn-success">Save Grade</button>
+            @Html.ActionLink(
+                "Back to Submissions",
+                "Submissions",
+                new { assignmentId = Model.AssignmentId },
+                new { @class = "btn btn-secondary ml-2" }
+            )
+        }
+    </div>
+</div>

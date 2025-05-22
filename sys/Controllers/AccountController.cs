@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
@@ -15,13 +16,17 @@ namespace sys.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
-
-        public AccountController() { }
+        private readonly ApplicationDbContext _db;
+        public AccountController() 
+        {
+            _db = new ApplicationDbContext();
+        }
 
         public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
         {
             UserManager = userManager;
             SignInManager = signInManager;
+
         }
 
         public ApplicationSignInManager SignInManager
@@ -72,9 +77,15 @@ namespace sys.Controllers
                         // Redirect student to their dashboard
                         return RedirectToAction("Index", "StudentDashboard");
                     }
-                    else if (await UserManager.IsInRoleAsync(user.Id, "Parent"))
+                    else if (user != null && await UserManager.IsInRoleAsync(user.Id, "Parent"))
                     {
-                        // Redirect parent to their dashboard
+                        // now _db is non-null
+                        var hasChild = await _db.UserParentChild
+                            .AnyAsync(upc => upc.ParentId == user.Id);
+
+                        if (!hasChild)
+                            return RedirectToAction("LinkChild", "ParentDashboard");
+
                         return RedirectToAction("Index", "ParentDashboard");
                     }
                     else if (await UserManager.IsInRoleAsync(user.Id, "Admin"))
